@@ -2,24 +2,26 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Material Design Login Form</title>
-
-
-
+  <title>Tripub</title>
       <link rel="stylesheet" href="css/style.css">
-
-
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <!--Google Font - Work Sans-->
 <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
-<link rel="import" href="https://www.polymer-project.org/0.5/components/paper-ripple/paper-ripple.html">
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    <p class="navbar-text">Tripub</p>
+  </div>
+</nav>
 
-<div class="container">
+<div class="Tcontainer">
   <div class="profile">
     <button class="profile__avatar" id="toggleProfile">
-     <img src="./img/Profile.jpg" alt="Avatar" />
+     <img src="./img/Profile.png" alt="Avatar" />
     </button>
     <div class="profile__form">
       <div class="profile__fields">
@@ -32,9 +34,15 @@
           <label for="fieldPassword" class="label">Password</label>
         </div>
         <div class="profile__footer">
-           <div class="button raised blue">
-            <div class="center" fit>LOGIN</div>
-            <paper-ripple fit></paper-ripple>
+          <div>
+            <div class="button raised blue left">
+              <div class="center" fit>LOGIN</div>
+              <paper-ripple fit></paper-ripple>
+            </div>
+            <div class="button raised blue right">
+              <div class="center" fit>SIGN UP</div>
+              <paper-ripple fit></paper-ripple>
+            </div>
           </div>
         </div>
       </div>
