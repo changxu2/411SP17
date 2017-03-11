@@ -28,9 +28,19 @@ button {
 }
 
 /* Container */
-.Tcontainer {
+.Tcontainer_in {
   position: relative;
-  margin-top: 400px;
+  margin-top: 350px;
+  width: 24em;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  animation: intro .7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.Tcontainer_up {
+  position: relative;
+  margin-top: 470px;
   width: 24em;
   left: 50%;
   top: 50%;

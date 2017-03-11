@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +12,8 @@
 </head>
 
 <body>
-
+Hey, <?php echo $_SESSION['user_name']; ?>. You are logged in!!!!!
+<?echo $_GET['user_id']?>
+<a href="login.php?logout">Logout</a>
 </body>
 </html>

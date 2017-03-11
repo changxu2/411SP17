@@ -23,33 +23,59 @@
             <a class="nav-link" href="#">Create Trip Plan!</a>
         </li>
     </ul>
+    <div>
+      <p>
+      <?if (isset($login)) {
+        if ($login->errors) {
+            foreach ($login->errors as $error) {
+                echo $error;
+            }
+        }
+        if ($login->messages) {
+            foreach ($login->messages as $message) {
+                echo $message;
+            }
+        }
+      }?>
 
-  <div class="Tcontainer">
+      <?if (isset($registration)) {
+
+          if ($registration->messages) {
+              foreach ($registration->messages as $message) {
+                  echo $message;
+              }
+          }
+      }
+      ?>
+    </p>
+    </div>
+
+  <div class="Tcontainer_in">
     <div class="profile">
       <button class="profile__avatar" id="toggleProfile">
         <img src="../img/Profile.png" alt="Avatar" />
       </button>
 
-      <form class="profile--open profile__form">
+      <form class="profile--open profile__form" method="post" action="./login.php" name="login">
  
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="usernameInput" placeholder="Username">
+            <input type="text" class="form-control" id="usernameInput" name="user_name" placeholder="Username" required>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input type="password" class="form-control" id="exampleInputPassword1" name="user_password" placeholder="Password" required>
           </div>
 
             <div class="profile__footer">
               <div>
                 <div class="button_left">
-                  <div class="center" onclick="post_to_sign_up()"><button type="submit" class="center btn btn-primary fit">LOG IN</button></div>
+                  <div class="center"><button type="submit" name="login" value="Log_in" class="center btn btn-primary fit">LOG IN</button></div>
                   <paper-ripple fit></paper-ripple>
                 </div>
 
                 <div class="button raised blue button_right">
-                  <div class="center" fit><a href="./signUp.html" id="signUp">SIGN UP</a></div>
+                  <div class="center" fit><a href="./signUp.php" id="signUp">SIGN UP</a></div>
                   <paper-ripple fit></paper-ripple>
                 </div>
               </div>
