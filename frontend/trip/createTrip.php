@@ -13,11 +13,15 @@
 <body>
 <!--Google Font - Work Sans-->
 <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <p class="navbar-text">Tripub</p>
-    </div>
-</nav>
+<ul class="nav nav-pills" style="background-color: aliceblue">
+    <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
+    <li class="nav-item">
+        <a class="nav-link active" href="#">My Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Create Trip Plan!</a>
+    </li>
+</ul>
 <div class="container">
 
 </div>
@@ -34,12 +38,10 @@
         </div>
 
         <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4">
+          <div class="col-6">
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Add new things to your plan!
           </button>
-
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -51,7 +53,6 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                  
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -63,33 +64,26 @@
             <button type="button" class="btn btn-outline-primary" id="addNew">Add new things to your plan!</button>
             -->
           </div>
-          <div class="col-4"></div>
         </div>
-        <!-- The Modal -->
-        <!--
-        <div id="myModal" class="modal">
 
-          <div class="modal-content">
-            <div class="modal-header">
-              <span class="close">&times;</span>
-              <h2>add to plan</h2>
-            </div>
-            <div class="modal-body">
-              <div class="container">
-                <form class="navbar-form navbar-left" role="search">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                  </div>
-                  <button type="submit" class="btn btn-outline-primary">Submit</button>
-                </form>
+        <div class="col-6">
+          <div class = "container">
+            <form class="form-inline" id = "searchForm" method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']);
+      ?>">
+              <label class="sr-only" for="inlineFormInput">Place</label>
+              <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
+
+              <label class="sr-only" for="inlineFormInputGroup">Zipcode</label>
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">@</div>
+                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Zipcode">
               </div>
-            </div>
-            <div class="modal-footer">
-              <h3>click entry to add</h3>
-            </div>
+
+              <button type="button" id="searchBtn" class="btn btn-primary">Submit</button>
+            </form>
+
           </div>
         </div>
-        -->
       </div>
       </div>
     </div>
