@@ -39,52 +39,47 @@
 
         <div class="row">
           <div class="col-6">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Add new things to your plan!
-          </button>
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Select A New Entry</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+            <ul class="list-group">
+              <?php
+              
+              if ( isset($_GET['planid'])){
+                if (!empty($_GET['planid']) ){
+                  echo "<li class="list-group-item active">success</li>";
+                }
+              }
+              else{
+
+              }
+
+               ?>
+            </ul>
+          </div>
+
+          <div class="col-6">
+            <div class = "container">
+              <form class="form-inline" id = "searchForm" method="GET" action = "createTrip.php">
+                <label class="sr-only" for="inlineFormInput">Place</label>
+                <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
+
+                <label class="sr-only" for="inlineFormInputGroup">Zipcode</label>
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                  <div class="input-group-addon">@</div>
+                  <input type="number" class="form-control" id="inlineFormInputGroup" placeholder="zipcode" name = "zipcode">
                 </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-                </div>
-              </div>
+
+                <button type="submit" id="searchBtn" class="btn btn-primary">Submit</button>
+              </form>
+              <?php
+              // check if result is fine, if yes do something..
+              if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
+                echo "Here is your place ";
+              }
+
+              $_GET = array();
+              ?>
             </div>
-            <!--
-            <button type="button" class="btn btn-outline-primary" id="addNew">Add new things to your plan!</button>
-            -->
           </div>
         </div>
-
-        <div class="col-6">
-          <div class = "container">
-            <form class="form-inline" id = "searchForm" method="post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']);
-      ?>">
-              <label class="sr-only" for="inlineFormInput">Place</label>
-              <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
-
-              <label class="sr-only" for="inlineFormInputGroup">Zipcode</label>
-              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                <div class="input-group-addon">@</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Zipcode">
-              </div>
-
-              <button type="button" id="searchBtn" class="btn btn-primary">Submit</button>
-            </form>
-
-          </div>
-        </div>
-      </div>
       </div>
     </div>
     <div class="col align-self-end">
