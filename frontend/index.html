@@ -27,32 +27,33 @@
       <button class="profile__avatar" id="toggleProfile">
         <img src="./img/Profile.png" alt="Avatar" />
       </button>
-
+      <form>
       <div class="profile__form">
         <div class="profile__fields">
-          <div class="field">
-            <input type="text" id="fieldUser" class="input" required pattern=.*\S.* />
-            <label for="fieldUser" class="label">Username</label>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="usernameInput" placeholder="Username">
           </div>
-          <div class="field">
-            <input type="password" id="fieldPassword" class="input" required pattern=.*\S.* />
-            <label for="fieldPassword" class="label">Password</label>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
           </div>
           <div class="profile__footer">
             <div>
-              <div class="button raised blue left">
-                <div class="center" fit>LOGIN</div>
-                <paper-ripple fit></paper-ripple>
-              </div>
-              <div class="button raised blue right">
-                <div class="center" fit>SIGN UP</div>
-                <paper-ripple fit></paper-ripple>
-              </div>
+                <div class="button_left">
+                  <div class="center" onclick="post_to_sign_up()"><button type="submit" class="center btn btn-primary fit">LOG IN</button></div>
+                  <paper-ripple fit></paper-ripple>
+                </div>
+
+                <div class="button raised blue button_right">
+                  <div class="center" fit><a href="user/signUp.html" id="signUp">SIGN UP</a></div>
+                  <paper-ripple fit></paper-ripple>
+                </div>
             </div>
           </div>
         </div>
       </div>
-
+      <form>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
