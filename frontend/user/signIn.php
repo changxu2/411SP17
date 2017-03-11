@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="button raised blue button_right">
-                  <div class="center" fit><a href="./signUp.php" id="signUp">SIGN UP</a></div>
+                  <a href="user/signUp.php" id="signUp"><div class="center" fit>SIGN UP</div></a>
                   <paper-ripple fit></paper-ripple>
                 </div>
               </div>
