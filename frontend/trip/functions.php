@@ -2,7 +2,7 @@
          function connectToDb() {
             $db = new mysqli('localhost', 'triphubAdmin', 'xxxxx', 'xxxxx');
 
-            if($db->connect_errno > 0){
+            if($db->connect_errno > 0) {
                 die('Unable to connect to database [' . $db->connect_error . ']');
             }
             return $db;
@@ -12,12 +12,38 @@
             if (!$db->query("INSERT INTO Plan VALUES ($pre_user, $crr_user)")) {
                 echo "INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
             }
-            return $mysqli->insert_id;
+            return $mysqli->insert;
          }
 
          function closeDb($db) {
             $db->close();
          }
 
+//         function getTrans($db) {
+//            $sql = "SELECT id, firstname, lastname FROM MyGuests";
+//            $result = $conn->query($sql);
+//         }
+//         function initTransQuery($db) {
+//            $stmt = $db->prepare("SELECT Name FROM Transportation WHERE TrDID = ?");
+//            return $stmt;
+//         }
+
+         function getTransById($transID, $db) {
+            $sql = "SELECT Type FROM Transportation WHERE TrDID = $transID";
+            $result = $db->query($sql);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+            }
+            return $result;
+         }
+
+        function getLocById($locID, $db) {
+            $sql = "SELECT Name, Type1, Longitude, Latitude FROM locations WHERE PlacesID = $locID";
+                $result = $db->query($sql);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+            }
+            return $result;
+        }
 
 ?>

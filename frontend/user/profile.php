@@ -8,7 +8,24 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
+<?php
+    $userId = $_GET['user_id'];
+    $userName = $_SESSION['user_name'];
+    $userEmail = $_SESSION['user_email']:
+    $db = new mysqli('localhost', 'triphubAdmin', 'xxxxx', 'xxxxx');
 
+     if($db->connect_errno > 0) {
+        die('Unable to connect to database [' . $db->connect_error . ']');
+     }
+    $sql = "SELECT * FROM Plan WHERE createdByUserID = $userId";
+    $result = $db->query($sql) or die($db->error);
+    if (!$result) {
+        printf("Errormessage: %s\n", $db->error);
+    }
+    
+
+
+?>
 <body>
 
 </body>
