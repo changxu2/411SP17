@@ -9,10 +9,7 @@
  * @link https://github.com/panique/php-login-minimal/
  * @license http://opensource.org/licenses/MIT MIT License
  */
-session_start();
-if (isset($_SESSION['username'])) {
-    header("Location: profile.php");
-}
+
 
 // checking for minimum PHP version
 if (version_compare(PHP_VERSION, '5.3.7', '<')) {
