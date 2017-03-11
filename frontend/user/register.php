@@ -10,7 +10,6 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-
 // checking for minimum PHP version
 if (version_compare(PHP_VERSION, '5.3.7', '<')) {
     exit("Sorry, Simple PHP Login does not run on a PHP version smaller than 5.3.7 !");
@@ -20,35 +19,33 @@ if (version_compare(PHP_VERSION, '5.3.7', '<')) {
     require_once("libraries/password_compatibility_library.php");
 }
 
-
-
-
 // include the configs / constants for the database connection
 require_once("config/db.php");
 
-// load the login class
-require_once("classes/Login.php");
+// load the registration class
+require_once("classes/Registration.php");
 
-// create a login object. when this object is created, it will do all login/logout stuff automatically
-// so this single line handles the entire login process. in consequence, you can simply ...
-$login = new Login();
+// create the registration object. when this object is created, it will do all registration stuff automatically
+// so this single line handles the entire registration process.
+$registration = new Registration();
 
+// show potential errors / feedback (from registration object)
+if (isset($registration)) {
+    if ($registration->errors) {
+        include("signUp.php"); 
+        }
+      
+    else if ($registration->messages) {
+        include("signIn.php");  
+    }
 
-// show potential errors / feedback (from login object)
-
-// ... ask if we are logged in here:
-if ($login->isUserLoggedIn() == true) {
-    // the user is logged in. you can do whatever you want here.
-    // for demonstration purposes, we simply show the "you are logged in" view.
-    $the_user = $_SESSION['user_id'];
-    header("Location: profile.php?user_id=$the_user");
-//    include("profile.php");
-
-} else {
-    // the user is not logged in. you can do whatever you want here.
-    // for demonstration purposes, we simply show the "you are not logged in" view.
-    include("signIn.php");
 }
+else{
+	include("signUp.php");
+}
+
+
+// show the register view (with the registration form, and messages/errors)
 
 
 ?>
