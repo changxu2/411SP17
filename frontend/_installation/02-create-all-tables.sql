@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS `Transportation`(
 CREATE TABLE IF NOT EXISTS `Plan` (
  `planID` int(11) NOT NULL AUTO_INCREMENT,
  `title` varchar(50),
- `commentsID` int(11),
  `ArrayOfLocations` varchar(1024),
  `ownedByUserID` int(11),
  `createdByUserID` int(11),
@@ -32,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `Friend`(
 
 CREATE TABLE IF NOT EXISTS `Comments` (
  `commentID` int(11) NOT NULL AUTO_INCREMENT,
- `userID` int(11),
+ `planID` int(11),
  `content` varchar(4096),
  PRIMARY KEY(`commentID`)
 );
