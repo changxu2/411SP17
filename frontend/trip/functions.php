@@ -1,6 +1,6 @@
 <?php
          function connectToDb() {
-            $db = new mysqli('localhost', 'triphubAdmin', 'xxxxx', 'xxxxx');
+            $db = new mysqli('localhost', 'root', 'xxxxx', 'xxxxx');
 
             if($db->connect_errno > 0){
                 die('Unable to connect to database [' . $db->connect_error . ']');
