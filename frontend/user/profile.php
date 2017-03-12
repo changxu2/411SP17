@@ -1,27 +1,40 @@
-<?
+<?php
+
 session_start();
- if (!isset($_SESSION['user_login_status'])) {
-    header("Location: login.php");
-}
+require_once("config/db.php");
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <meta charset="UTF-8">
+  <title>Tripub</title>
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<?php
+    $userId = $_GET['user_id'];
+    $userName = $_SESSION['user_name'];
+    $userEmail = $_SESSION['user_email'];
+    $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+     if($db->connect_errno > 0) {
+        die('Unable to connect to database [' . $db->connect_error . ']');
+     }
+    $sql = "SELECT * FROM Plan WHERE createdByUserID = $userId";
+    $result = $db->query($sql) or die($db->error);
+    if (!$result) {
+        printf("Errormessage: %s\n", $db->error);
+    }
+    
 
 
-    <link rel="stylesheet" href="css/signInUp.css">
-
-    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="js/signUp.js"></script>
-  </head>
-
+?>
 <body>
+
     <ul class="nav nav-pills" style="background-color: aliceblue">
         <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
         <li class="nav-item">
@@ -34,11 +47,16 @@ session_start();
             <a class = "nav-link" href = "login.php?logout" style ="padding-left: 670px">Logout</a >
         </li>
     </ul>
+    <?
+    while ($row = $result->fetch_assoc()) {
+        printf ("%s (%s)\n", $row["Name"], $row["CountryCode"]);
+    }
+    ?>
     <div>
 
 Hey, my dear <?php echo $_SESSION['user_name']; ?>. You are logged in!!!!!!!
 You user id is: <?echo $_GET['user_id']?>
-
+    </div>
 
 
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>

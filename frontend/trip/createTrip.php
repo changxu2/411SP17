@@ -48,7 +48,7 @@
                   $_SESSION['currentPlan'] = $_GET['planid'];
                   //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
                   $db = connectToDb();
-                  $res = checkPlan($db, $_GET['planid'])
+                  $res = checkPlan($db, $_GET['planid']);
                 }
                 // check if result is fine, if yes do something..
                 if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
@@ -101,6 +101,8 @@
 
 
 <script src="js/index.js"></script>
+<script>
 
+</script>
 </body>
 </html>
