@@ -42,13 +42,25 @@
 //            return $stmt;
 //         }
          function getPlaces($db, $zipcode, $place) {
-            $zip = //trimmmmmm
-            $sql = "SELECT Longtitude, Altitude FROM Zipcode WHERE Zip = $zip";
+            $zip = ltrim($zipcode, '0');
+            $sql = "SELECT longtitude, latitude FROM Zipcode WHERE Zip = $zip";
             $result = $db->query($sql);
             if (!$result) {
                 printf("Errormessage: %s\n", $db->error);
+                return NULL;
+            }
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $latitude = $row['Latitude']
+            $longitude = $row['Longitude']
+            $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.Latitude < $latitude + 20) AND (locations.Latitude > $latitude - 20 ) AND (locations.Longitude < $longitude +20) AND (locations.Longitude > $longitude -20) AND (locations.NAME LIKE %place%)";
+            $result = $db->query($sql);
+            $myArray = array();
+            while($row = $result->fetch_array(MYSQL_ASSOC)) {
+              $myArray[] = $row;
             }
 
+            echo $myArray;
+            return;
          }
 
          function getTransById($transID, $db) {

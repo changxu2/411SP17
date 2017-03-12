@@ -39,37 +39,32 @@
 
         <div class="row">
           <div class="col-6">
-            <ul class="list-group">
-<li class="list-group-item active">Plan: </li>
-              <?php
-              require('functions.php');
-              if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                if(isset($_GET['planid']) && !empty($_GET['planid'])){
-                  $_SESSION['currentPlan'] = $_GET['planid'];
-                  //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
-                  $db = connectToDb();
-                  $res = checkPlan($db, $_GET['planid']);
-                }
-                // check if result is fine, if yes do something..
-                if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
-                  $place = $_GET['place'];
-                  echo "Here is your place ", $place, " .<br>";
-                  if($place == "Hanoi"){
-                    echo "hanoi got<br>";
-                    $data = array('planid'=>'123', 'asd'=>'a13');
-                    $url = "http://localhost/411SP17/frontend/trip/createTrip.php";
-                    $url = $url. "?".http_build_query($data);
-                    echo "url: ", $url, "<br>";
-                    header("Location: " . $url);
-                  }
-                }
-
-                $_GET = array();
+            <?php
+            require('functions.php');
+            $db = connectToDb();
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+              if(isset($_GET['planid']) && !empty($_GET['planid'])){
+                $_SESSION['currentPlan'] = $_GET['planid'];
+                //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
+                $res = checkPlan($db, $_GET['planid']);
+                echo "plan info" . $res;
               }
-              ?>
-            </ul>
+              // check if result is fine, if yes do something..
+              if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
+                $place = $_GET['place'];
+                $zipcode = $_GET['zipcode'];
+                $res = getPlaces($db, $zipcode, $place);
+                echo "search result" . $res;
+              }
 
-            <li class="list-group-item">Add more entries to your plan!</li>
+              $_GET = array();
+            }
+            ?>
+            <ul id = "planlist" class="list-group">
+              <li class="list-group-item active">Plan: </li>
+
+              <li class="list-group-item">Add more entries to your plan!</li>
+            </ul>
           </div>
 
           <div class="col-6">
