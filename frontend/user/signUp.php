@@ -81,7 +81,7 @@
             <div class="profile__footer">
               <div>
                 <div class="button raised blue button_left">
-                  <div class="center" fit><a href="./signIn.php" id="signIn">LOGIN</a></div>
+                  <a href="./signIn.php" id="signIn"><div class="center" fit>LOGIN</div></a>
                   <paper-ripple fit></paper-ripple>
                 </div>
                 <div class="button_right">

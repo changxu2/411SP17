@@ -40,24 +40,41 @@
         <div class="row">
           <div class="col-6">
             <ul class="list-group">
+<li class="list-group-item active">Plan: </li>
               <?php
-              
-              if ( isset($_GET['planid'])){
-                if (!empty($_GET['planid']) ){
-                  echo "<li class="list-group-item active">success</li>";
+              require('functions.php');
+              if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                if(isset($_GET['planid']) && !empty($_GET['planid'])){
+                  $_SESSION['currentPlan'] = $_GET['planid'];
+                  //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
+                  $db = connectToDb();
+                  $res = checkPlan($db, $_GET['planid'])
                 }
-              }
-              else{
+                // check if result is fine, if yes do something..
+                if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
+                  $place = $_GET['place'];
+                  echo "Here is your place ", $place, " .<br>";
+                  if($place == "Hanoi"){
+                    echo "hanoi got<br>";
+                    $data = array('planid'=>'123', 'asd'=>'a13');
+                    $url = "http://localhost/411SP17/frontend/trip/createTrip.php";
+                    $url = $url. "?".http_build_query($data);
+                    echo "url: ", $url, "<br>";
+                    header("Location: " . $url);
+                  }
+                }
 
+                $_GET = array();
               }
-
-               ?>
+              ?>
             </ul>
+
+            <li class="list-group-item">Add more entries to your plan!</li>
           </div>
 
           <div class="col-6">
             <div class = "container">
-              <form class="form-inline" id = "searchForm" method="GET" action = "createTrip.php">
+              <form class="form-inline" id = "searchForm" method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <label class="sr-only" for="inlineFormInput">Place</label>
                 <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
 
@@ -69,14 +86,6 @@
 
                 <button type="submit" id="searchBtn" class="btn btn-primary">Submit</button>
               </form>
-              <?php
-              // check if result is fine, if yes do something..
-              if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
-                echo "Here is your place ";
-              }
-
-              $_GET = array();
-              ?>
             </div>
           </div>
         </div>
