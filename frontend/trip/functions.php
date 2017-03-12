@@ -18,7 +18,7 @@ tripubproject_adm', '12345shangshandalaohu', 'tripubproject_DB1');
          }
 
          function checkPlan($db, $pid) { //insert a new plan and return the id
-            if ($result = $db->query("SELECT Title, ArrayOfLocations FROM Plan WHERE planID = $pid")) {
+            if ($result = $db->query("SELECT Plan.Title, contains.locationID FROM Plan, contains WHERE Plan.planID = $pid AND contains.planID = $pid")) {
               $currentfield = mysqli_field_tell($result);
               printf("Column %d:\n", $currentfield);
               printf("Name:     %s\n", $finfo->name);
