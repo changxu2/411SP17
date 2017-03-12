@@ -27,6 +27,15 @@
 //            $stmt = $db->prepare("SELECT Name FROM Transportation WHERE TrDID = ?");
 //            return $stmt;
 //         }
+         function getPlaces($db, $zipcode, $place) {
+            $zip = //trimmmmmm
+            $sql = "SELECT Longtitude, Altitude FROM Zipcode WHERE Zip = $zip";
+            $result = $db->query($sql);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+            }
+
+         }
 
          function getTransById($transID, $db) {
             $sql = "SELECT Type FROM Transportation WHERE TrDID = $transID";
