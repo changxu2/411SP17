@@ -1,3 +1,10 @@
+<?php
+
+session_start();
+require_once("config/db.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +18,8 @@
 <?php
     $userId = $_GET['user_id'];
     $userName = $_SESSION['user_name'];
-    $userEmail = $_SESSION['user_email']:
-    $db = new mysqli('localhost', 'triphubAdmin', 'xxxxx', 'xxxxx');
+    $userEmail = $_SESSION['user_email'];
+    $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
      if($db->connect_errno > 0) {
         die('Unable to connect to database [' . $db->connect_error . ']');
@@ -40,11 +47,16 @@
             <a class = "nav-link" href = "login.php?logout" style ="padding-left: 670px">Logout</a >
         </li>
     </ul>
+    <?
+    while ($row = $result->fetch_assoc()) {
+        printf ("%s (%s)\n", $row["Name"], $row["CountryCode"]);
+    }
+    ?>
     <div>
 
 Hey, my dear <?php echo $_SESSION['user_name']; ?>. You are logged in!!!!!!!
 You user id is: <?echo $_GET['user_id']?>
-
+    </div>
 
 
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
