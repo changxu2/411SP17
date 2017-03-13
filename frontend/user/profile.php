@@ -84,8 +84,8 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
             echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" id = \"".$to_find."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
       <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
           }
-          if (isset($_POST['addTrip'])){
-            if(!empty($_POST['addTrip'])){
+          if (isset($_POST['GET'])){
+            if(!empty($_POST['GET'])){
               $newPlanId = createPlan($userId, $userId, $db);
               echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
         <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
@@ -96,7 +96,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         </div>
       </div>
       <div class="col-6">
-        <form class="form-inline" method="post" action="./profile.php">
+        <form class="form-inline" method="GET" action="./profile.php">
           <button type = "submit" name = "addTrip" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
           <button type = "button" class="btn btn-primary"> Add Friend </button>
         </form>
