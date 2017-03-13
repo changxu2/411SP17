@@ -54,7 +54,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
 
   //$sql2 = "SELECT planID FROM Plan  WHERE createdByUserID = (SELECT userID2 From Friend WHERE userID1 = $userId);";   //TODO advanced query 1
-  $sql2 = "SELECT planID FROM Plan INNER JOIN Friend ON (Plan.createdByUserID = Friend.userID2 AND Friend.userID1 = $userId);"
+  $sql2 = "SELECT planID FROM Plan INNER JOIN Friend ON (Plan.createdByUserID = Friend.userID2 AND Friend.userID1 = $userId);";
   $result2 = $db->query($sql2) or die($db->error);
   if (!$result2) {
       printf("Errormessage: %s\n", $db->error);
