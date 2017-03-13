@@ -160,28 +160,27 @@ session_start();
 
             $db = connectToDb();
 
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-              if(isset($_GET['planid']) && !empty($_GET['planid'])){
-                $_SESSION['currentPlan'] = $_GET['planid'];
-                //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
-                $res = checkPlan($db, $_GET['planid']);
-                $haha = getTitle($db, $_GET['planid']);
+            if(isset($_GET['planid']) && !empty($_GET['planid'])){
+              $_SESSION['currentPlan'] = $_GET['planid'];
+              //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
+              $res = checkPlan($db, $_GET['planid']);
+              $haha = getTitle($db, $_GET['planid']);
 
-              }
-              else{
-                $_GET['planid'] = $_SESSION['currentPlan'];
-                $res = checkPlan($db, $_GET['planid']);
-                $haha = getTitle($db, $_GET['planid']);
-              }
-              // check if result is fine, if yes do something..
-              if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
-                $place = $_POST['place'];
-                $zipcode = $_POST['zipcode'];
-                $result = getPlaces($db, $zipcode, $place);
-                //echo "search result" . $result;
-                include("showLocs.php");
-              }
             }
+            else{
+              $_GET['planid'] = $_SESSION['currentPlan'];
+              $res = checkPlan($db, $_GET['planid']);
+              $haha = getTitle($db, $_GET['planid']);
+            }
+            // check if result is fine, if yes do something..
+            if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
+              $place = $_POST['place'];
+              $zipcode = $_POST['zipcode'];
+              $result = getPlaces($db, $zipcode, $place);
+              //echo "search result" . $result;
+              include("showLocs.php");
+            }
+
             ?>
             <ul id = "planlist" class="list-group">
               <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
