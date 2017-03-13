@@ -174,7 +174,7 @@ session_start();
               $zipcode = $_POST['zipcode'];
               $result = getPlaces($db, $zipcode, $place);
               //echo "search result" . $result;
-              include("showLocs.php");
+              //include("showLocs.php");
             }
 
             ?>
