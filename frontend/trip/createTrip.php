@@ -150,7 +150,7 @@ session_start();
         <a class="nav-link" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">Profile</a>
     </li>
     <li class = "nav-item">
-        <a class = "nav-link" href = "login.php?logout">Logout</a >
+        <a class = "nav-link" href = "../user/login.php?logout">Logout</a >
     </li>
 </ul>
 <div class="container">
