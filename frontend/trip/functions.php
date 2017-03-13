@@ -1,6 +1,6 @@
 <?php
          function connectToDb() {
-            $db = new mysqli('localhost', 'tripubproject_adm', 'tripubproject_DB1', '12345shangshandalaohu');
+            $db = new mysqli('localhost', 'tripubproject_adm', '12345shangshandalaohu', 'tripubproject_DB1');
 
 
 
