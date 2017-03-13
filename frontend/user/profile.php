@@ -142,7 +142,6 @@ button: hover {
     </tr>
   </table>
 </div>
-</body>
 
 
 
@@ -173,6 +172,7 @@ button: hover {
 
    ?>
 </table>
+
 
 <ul class="list-group">
   <?php
