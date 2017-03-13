@@ -51,8 +51,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  <script src="js/signUp.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -88,14 +87,14 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
-      <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
+            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+      <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
           }
           if (isset($_POST['addTrip'])){
             if(!empty($_POST['addTrip'])){
               $newPlanId = createPlan($userId, $userId, $db);
-              echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
-        <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
+              echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+        <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
             }
           }
           ?>
@@ -111,6 +110,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-
+  <script src="/js/profile.js"></script>
 </body>
 </html>
