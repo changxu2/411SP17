@@ -29,7 +29,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     return true;
   }
   function getFriend($uid, $db){
-    $sql = "SELECT userID2 FROM Friend WHERE userID1 = '$uid';";
+    $sql = "SELECT user_name FROM Friend INNER JOIN users ON (userID1 = '$uid', userID2 = user_id);";
     $result = $db->query($sql);
     $myArray = array();
     while($row = $result->fetch_array(MYSQL_ASSOC)) {
@@ -190,7 +190,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
             <?php
               $row = getFriend($userId, $db);
               foreach ($row as $ele){
-                echo "<li class=\"list-group-item\">".$ele['userID2']."</li>";
+                echo "<li class=\"list-group-item\">".$ele['user_name']."</li>";
               }
             ?>
           </ul>
