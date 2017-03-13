@@ -4,10 +4,12 @@ $(".editPlan").on('click', function(){
 
 $("#add_trip").on('click', function(){
   $.post(document.URL, { "addTrip": "1"} );
+  window.location.reload()
 });
 
 $(".deletePlan").on('click', function(){
   var str = this.id
   str = str.replace('d', '')
   $.post(document.URL, { "deletePlan": str} );
+  window.location.reload()
 });
