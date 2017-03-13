@@ -28,7 +28,7 @@
       <?
       if(isset($_GET['user_id'])){
         if(!empty($_GET['user_id'])){
-          echo "<script>window.location.replace(\"/profile.php\");</script>"
+          header("Location: profile.php?user_id=$_GET['user_id']");
         }
       }
       if (isset($login)) {
