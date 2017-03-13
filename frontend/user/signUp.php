@@ -17,10 +17,10 @@
     <ul class="nav nav-pills" style="background-color: aliceblue">
         <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
         <li class="nav-item">
-            <a class="nav-link active" href="#">My Profile</a>
+            <a class="nav-link active" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/">Login</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Create Trip Plan!</a>
+            <a class="nav-link" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/signUp.php">Sign Up!</a>
         </li>
     </ul>
     <div>
@@ -31,7 +31,7 @@
               foreach ($registration->errors as $error) {
                   echo $error;
               }
-          
+
         }
         else if ($registration->messages) {
             foreach ($registration->messages as $message) {
