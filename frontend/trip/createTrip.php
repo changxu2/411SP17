@@ -82,6 +82,10 @@ session_start();
             $longitude = $row['LONGITUDE'];
             $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.Latitude < $latitude + 50) AND (locations.Latitude > $latitude - 50 ) AND (locations.Longitude < $longitude +20) AND (locations.Longitude > $longitude -20) AND (locations.NAME LIKE %$place%)";
             $result = $db->query($sql);
+            if(!$result){
+              echo "Nothing Found.";
+              return NULL;
+            }
             $myArray = array();
             while($row = $result->fetch_array(MYSQLI_ASSOC)) {
               $myArray[] = $row;
