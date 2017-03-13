@@ -1,7 +1,9 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php
-session_start();
 if(isset($_GET['user_id'])){
   if(!empty($_GET['user_id'])){
     header("Location: profile.php?user_id=".$_GET['user_id']);

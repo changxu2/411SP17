@@ -1,17 +1,19 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php
 require_once("config/db.php");
 
 function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return the id
-  if (!$db->query("INSERT INTO Plan (planID, title, ownedByUserID, createdByUserID) VALUES (NULL, NULL, $pre_user, $crr_user);")) {
+  if (!$db->query("INSERT INTO Plan (ownedByUserID, createdByUserID) VALUES (".$pre_user.", ".$crr_user.");")) {
       echo "INSERT failed: (" . $db->errno . ") " . $db->error;
       return NULL;
   }
   return $db->insert_id;
  }
-
-  $userId = $_GET['user_id'];
+  $userId = $_SESSION['user_id'];
   $userName = $_SESSION['user_name'];
   $userEmail = $_SESSION['user_email'];
   $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
