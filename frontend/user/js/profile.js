@@ -3,13 +3,15 @@ $(".editPlan").on('click', function(){
 });
 
 $("#add_trip").on('click', function(){
-  $.post(document.URL, { "addTrip": "1"} );
-  setTimeout(window.location.reload(), 4000)
+  $.post(document.URL, { "addTrip": "1"} , function(result){
+      setTimeout(window.location.reload(), 4000)
+  });
 });
 
 $(".deletePlan").on('click', function(){
   var str = this.id
   str = str.replace('d', '')
-  $.post(document.URL, { "deletePlan": str} );
-   setTimeout(window.location.reload(), 4000)
+  $.post(document.URL, { "deletePlan": str}, function(result){
+      setTimeout(window.location.reload(), 4000)
+  });
 });
