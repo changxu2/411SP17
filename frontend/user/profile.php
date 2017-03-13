@@ -41,7 +41,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="stylesheet" href="css/signInUp.css">
+  <link rel="stylesheet" href="css/profile.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -64,8 +64,8 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
           <a class = "nav-link" href = "login.php?logout">Logout</a >
       </li>
   </ul>
-  
-  <div class="container">
+
+  <div class="container" id = "mainW">
     <div class="row">
       <div class="col-3">
       </div>
