@@ -59,7 +59,9 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   <ul class="nav nav-pills" style="background-color: aliceblue">
       <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
       <li class="nav-item">
-         <?php echo $userName." Email:[".$userEmail."]";?>
+        <a class="navbar-brand" href="#">
+          <?php echo $userName." Email:[".$userEmail."]";?>
+        </a>
       </li>
       <li class="nav-item">
           <a class="nav-link" href="#">Create Trip Plan!</a>
