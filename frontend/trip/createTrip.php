@@ -47,27 +47,35 @@
                 $_SESSION['currentPlan'] = $_GET['planid'];
                 //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
                 $res = checkPlan($db, $_GET['planid']);
-                echo "plan info" . $res;
+                //echo "plan info" . $res;
               }
               // check if result is fine, if yes do something..
               if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
                 $place = $_GET['place'];
                 $zipcode = $_GET['zipcode'];
-                $res = getPlaces($db, $zipcode, $place);
-                echo "search result" . $res;
+                $result = getPlaces($db, $zipcode, $place);
+                //echo "search result" . $result;
+                include showLocs.php
+
               }
 
               $_GET = array();
             }
             ?>
             <ul id = "planlist" class="list-group">
-              <li class="list-group-item active">Plan: </li>
+              <li class="list-group-item active">Plan: $res[0]['Title']</li>
+              <?php
+                    foreach ($res as $loc) {
+                          echo "<li class="list-group-item">$loc['locations']['NAME'] $loc['locations']['TYPE']</li>"
+                          
+                    }
+              ?>
 
-              <li class="list-group-item">Add more entries to your plan!</li>
             </ul>
           </div>
 
           <div class="col-6">
+            <li class="list-group-item">Add more entries to your plan!</li>
             <div class = "container">
               <form class="form-inline" id = "searchForm" method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <label class="sr-only" for="inlineFormInput">Place</label>
@@ -94,10 +102,8 @@
 </div>
 
 
-
 <script src="js/index.js"></script>
 <script>
-
 </script>
 </body>
 </html>
