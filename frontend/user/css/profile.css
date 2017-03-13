@@ -1,3 +1,11 @@
 #mainW{
   padding-top: 40px;
 }
+body {
+  position: relative;
+  margin: 0px;
+  font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  background: #2196F3 !important;
+  color: #777;
+}
