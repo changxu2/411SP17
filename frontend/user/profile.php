@@ -102,15 +102,12 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         </ul>
       </div>
       <div class="col-3">
+        <form class="form-inline" method="post" action="./profile.php">
+          <button type = "submit" name = "addTrip" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
+          <button type = "button" class="btn btn-primary"> Add Friend </button>
+        </form>
       </div>
     </div>
-  </div>
-
-  <div class = "container" style = "background-color:#f1f1f1">
-    <form  method="post" action="./profile.php">
-    <button type = "submit" name = "addTrip" id="add_trip"> Add Trip Plans </button>
-    <button type = "button"> Add Friend </button>
-    </form>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
