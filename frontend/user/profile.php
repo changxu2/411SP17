@@ -13,6 +13,13 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   }
   return $db->insert_id;
  }
+ function deletePlan($planid, $db) { //insert a new plan and return the id
+   if (!$db->query("DELETE FROM Plan WHERE planID = ".$planid.";")) {
+       echo "INSERT failed: (" . $db->errno . ") " . $db->error;
+       return;
+   }
+   return;
+  }
   $userId = $_SESSION['user_id'];
   $userName = $_SESSION['user_name'];
   $userEmail = $_SESSION['user_email'];
@@ -89,6 +96,11 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               $newPlanId = createPlan($userId, $userId, $db);
               echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
         <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
+            }
+          }
+          if (isset($_POST['deletePlan'])){
+            if(!empty($_POST['deletePlan'])){
+              deletePlan($_POST['deletePlan'], $db);
             }
           }
           ?>

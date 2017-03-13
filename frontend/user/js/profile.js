@@ -5,3 +5,7 @@ $(".editPlan").on('click', function(){
 $("#add_trip").on('click', function(){
   $.post(document.URL, { "addTrip": "1"} );
 });
+
+$(".deletePlan").on('click', function(){
+  $.post(document.URL, { "deletePlan": this.id} );
+});
