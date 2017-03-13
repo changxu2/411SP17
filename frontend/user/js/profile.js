@@ -15,3 +15,19 @@ $(".deletePlan").on('click', function(){
       setTimeout(window.location.reload(), 4000)
   });
 });
+$("#followUser").submit(function(e) {
+
+    var url = "http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php"; // the script where you handle the form input.
+
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#followUser").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               setTimeout(window.location.reload(), 3000)
+           }
+         });
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+});

@@ -178,7 +178,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         </div>
       </div>
       <div class="col-6">
-        <form method="post" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">
+        <form  id="followUser" method="post" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">
           <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" name="friend" placeholder="Follow by Username">
           <button type = "button" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
           <button type = "submit" class="btn btn-primary"> Follow This User </button>
