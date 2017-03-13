@@ -140,12 +140,17 @@ session_start();
 <!--Google Font - Work Sans-->
 
 <ul class="nav nav-pills" style="background-color: aliceblue">
-    <a class="navbar-brand" href="/search.php" style="padding-left: 1%">Triphub</a>
+    <a class="navbar-brand" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/">Triphub</a>
     <li class="nav-item">
-        <a class="nav-link active" href="../user/profile.php?profile.php?user_id=$the_user">My Profile</a>
+      <a class="navbar-brand" href="#">
+        <?php echo $_SESSION['user_name']." Email:[".$_SESSION['user_email']."]";?>
+      </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="">Create Trip Plan!</a>
+        <a class="nav-link" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">Profile</a>
+    </li>
+    <li class = "nav-item">
+        <a class = "nav-link" href = "login.php?logout">Logout</a >
     </li>
 </ul>
 <div class="container">
