@@ -25,7 +25,13 @@
     </ul>
     <div>
       <p>
-      <?if (isset($login)) {
+      <?
+      if(isset($_GET['user_id'])){
+        if(!empty($_GET['user_id'])){
+          echo "<script>window.location.replace(\"/profile.php\");</script>"
+        }
+      }
+      if (isset($login)) {
         if ($login->errors) {
             foreach ($login->errors as $error) {
                 echo $error;
@@ -57,7 +63,7 @@
       </button>
 
       <form class="profile--open profile__form" method="post" action="./login.php" name="login">
- 
+
           <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="usernameInput" name="user_name" placeholder="Username" required>
