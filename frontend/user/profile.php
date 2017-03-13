@@ -64,11 +64,13 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
           <a class = "nav-link" href = "login.php?logout">Logout</a >
       </li>
   </ul>
+  
   <div class="container">
     <div class="row">
       <div class="col-3">
       </div>
       <div class="col-6">
+      	<div class="jumbotron">
         <ul class="list-group">
           <?php
           for ($i = 0; $i < $count; $i++) {
@@ -93,6 +95,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
           }
           ?>
         </ul>
+        </div>
       </div>
       <div class="col-3">
         <form class="form-inline" method="post" action="./profile.php">
