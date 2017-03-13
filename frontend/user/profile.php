@@ -189,7 +189,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
             <li class="list-group-item active">You are following</li>
             <?php
               $row = getFriend($userId, $db);
-              for ($row as $ele){
+              foreach ($row as $ele){
                 echo "<li class=\"list-group-item\">".$ele['userID2']."</li>";
               }
             ?>
