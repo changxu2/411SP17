@@ -70,55 +70,54 @@ session_start();
 //            return $stmt;
 //         }
          function getPlaces($db, $zipcode, $place) {
-            $zip = ltrim($zipcode, '0');
-            echo "zipcode is $zip";
-            $sql = "SELECT longitude, latitude FROM zipcode WHERE ZIP = $zip";
-            $result = $db->query($sql);
-            if (!$result) {
-                printf("Errormessage: %s\n", $db->error);
-                return NULL;
-            }
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $latitude = $row['latitude'];
-            $longitude = $row['longitude'];
-            echo "la is $latitude, lo is $longitude";
-            $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.LATITUDE < $latitude + 50) AND (locations.LATITUDE > $latitude - 50 ) AND (locations.LONGITUDE < $longitude +20) AND (locations.LONGITUDE > $longitude -20) AND (locations.NAME LIKE '%$place%');";
-            $result = $db->query($sql);
-            if(!$result){
-              echo "Nothing Found.";
+          $zip = ltrim($zipcode, '0');
+          //echo "zipcode is $zip";
+          $sql = "SELECT longitude, latitude FROM zipcode WHERE ZIP = $zip";
+          $result = $db->query($sql);
+          if (!$result) {
+              printf("Errormessage: %s\n", $db->error);
               return NULL;
-            }
-            $myArray = array();
-            while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-              $myArray[] = $row;
-            }
-            return $myArray;
+          }
+          $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+          $latitude = $row['latitude'];
+          $longitude = $row['longitude'];
+          //echo "la is $latitude, lo is $longitude";
+          $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.LATITUDE < $latitude + 50) AND (locations.LATITUDE > $latitude - 50 ) AND (locations.LONGITUDE < $longitude +20) AND (locations.LONGITUDE > $longitude -20) AND (locations.NAME LIKE '%$place%');";
+          $result = $db->query($sql);
+          if(!$result){
+            //echo "Nothing Found.";
+            return NULL;
+          }
+          $myArray = array();
+          while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $myArray[] = $row;
+          }
+          return $myArray;
          }
          function getTransById($transID, $db) {
-            $sql = "SELECT Type FROM Transportation WHERE trDID = $transID";
-            $result = $db->query($sql);
-            if (!$result) {
-                printf("Errormessage: %s\n", $db->error);
-            }
-            return $result;
+          $sql = "SELECT Type FROM Transportation WHERE trDID = $transID";
+          $result = $db->query($sql);
+          if (!$result) {
+              printf("Errormessage: %s\n", $db->error);
+          }
+          return $result;
          }
         function getLocById($locID, $db) {
-            $sql = "SELECT Name, Type, Longitude, Latitude FROM locations WHERE ID = $locID";
-                $result = $db->query($sql);
-            if (!$result) {
-                printf("Errormessage: %s\n", $db->error);
-            }
-            return $result;
+          $sql = "SELECT NAME, TYPE, LONGITUDE, LATITUDE FROM locations WHERE ID = $locID;";
+          $result = $db->query($sql);
+          if (!$result) {
+              printf("Errormessage: %s\n", $db->error);
+          }
+          return $result->fetch_array(MYSQLI_ASSOC);
         }
-
-
-
-
-
-
-
-
-
+        function addToPlan($planid, $locid, $db){
+          $sql = "INSERT INTO contains(planID, locationID) VALUES ($planid, $locid);";
+          $result = $db->query($sql);
+          if (!$result) {
+              printf("Errormessage: %s\n", $db->error);
+          }
+          return NULL;
+        }
 //$userId = $_GET['user_id'];
 //    $userName = $_SESSION['user_name'];
 //    $userEmail = $_SESSION['user_email'];
@@ -175,28 +174,25 @@ session_start();
               $haha = getTitle($db, $_GET['planid']);
             }
             // check if result is fine, if yes do something..
-            if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
-              $place = $_POST['place'];
-              $zipcode = $_POST['zipcode'];
-              $result = getPlaces($db, $zipcode, $place);
-              //echo "search result" . $result;
-              //include("showLocs.php");
-            }
-
             ?>
             <ul id = "planlist" class="list-group">
               <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
               <?php
-                    foreach ($res as $loc) {
-                          echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]</li>";
-                    }
+                  foreach ($res as $loc) {
+                    echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]</li>";
+                  }
+                  if(isset($_POST['addID']) && !empty($_POST['addID'])){
+                    $row = getLocById($_POST['addID'], $db);
+                    echo "<li class=\"list-group-item\">".$row['NAME']."   Type[".$row['TYPE']."]</li>";
+                    addToPlan($_GET['planid'], $_POST['addID'], $db)
+                  }
               ?>
 
             </ul>
           </div>
 
           <div class="col-6">
-            <li class="list-group-item">Add more entries to your plan!</li>
+            <li class="list-group-item">Add more entries to your plan!</li><br>
             <div class = "container">
               <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php">
                 <label class="sr-only" for="inlineFormInput">Place</label>
@@ -210,6 +206,19 @@ session_start();
 
                 <button type="submit" id="searchBtn" class="btn btn-primary">Submit</button>
               </form>
+
+              <?php
+              if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
+                echo "<ul class=\"list-group\">"
+                $place = $_POST['place'];
+                $zipcode = $_POST['zipcode'];
+                $result = getPlaces($db, $zipcode, $place);
+                foreach ($result as $loc) {
+                  echo "<li class=\"list-group-item active\">". $loc["NAME"]. "  Type: [".$loc["TYPE"]."] <button type=\"button\" id = \"".$loc["ID"]."\" class=\"btn btn-secondary btn-sm addLoc\">Add Entry</button></li>";
+                }
+                echo "<\ul>"
+              }
+              ?>
             </div>
           </div>
         </div>
