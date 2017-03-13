@@ -8,5 +8,7 @@ $("#add_trip").on('click', function(){
 
 $(".deletePlan").on('click', function(){
   alert(this.id)
-  $.post(document.URL, { "deletePlan": this.id} );
+  var str = this.id
+  str = str.replace('d', '')
+  $.post(document.URL, { "deletePlan": str} );
 });
