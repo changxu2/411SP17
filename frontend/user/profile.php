@@ -63,16 +63,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
           <a class = "nav-link" href = "login.php?logout">Logout</a >
       </li>
   </ul>
-  <script>
-
-  var jumpEdit = function(){
-    var url = 'http://tripubproject.web.engr.illinois.edu/411SP17/frontend'
-    url += ('/trip/createTrip.php?planID=' + this.id)
-    alert(this.id)
-    window.location.replace(url);
-  }
-
-  </script>
   <div class="container" id = "mainW">
     <div class="row">
       <div class="col-6">
