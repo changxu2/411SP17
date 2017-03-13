@@ -149,35 +149,56 @@ button: hover {
 
 
 <table id = "t01" style = "width: 100%">
-  <?php for ($i = 0; $i < $count; $i++) { 
+  <?php for ($i = 0; $i < $count; $i++) {
     //find the name of the plan with the ids array
     $to_find = $ids[$i];
 
-    $sql = "SELECT title FROM Plan WHERE planID = $to_find;"; 
+    $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
     $result_query = $db->query($sql) or die($db->error);
     if (!$result_query) {
       printf("Errormessage: %s\n", $db->error);
-    } 
+    }
     $result_row = $result_query->fetch_object();
     ?>
     <tr>
       <td><p><?php echo $result_row->title; ?></p></td>
     </tr>
-  <?php } ?>
+  <?php }
+    if (isset($_POST['addTrip'])){
+      $newPlanId = createPlan($userId, $userId, $db);
+      //$the_user = $_SESSION['user_id'];
+
+    }
+
+   ?>
 </table>
+
+<ul class="list-group">
+  <?php
+  for ($i = 0; $i < $count; $i++) {
+    //find the name of the plan with the ids array
+    $to_find = $ids[$i];
+
+    $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
+    $result_query = $db->query($sql) or die($db->error);
+    if (!$result_query) {
+      printf("Errormessage: %s\n", $db->error);
+    }
+    $result_row = $result_query->fetch_object();
+    echo htmlspecialchars("<li class=\"list-group-item active\">".$result_row->title."</li>");
+  }
+  if (isset($_POST['addTrip'])){
+    if(!empty($_POST['addTrip'])){
+      $newPlanId = createPlan($userId, $userId, $db);
+      echo htmlspecialchars("<li class=\"list-group-item active\">New Plan</li>");
+    }
+  }
+  ?>
+</ul>
 
 <div class = "container" style = "background-color:#f1f1f1">
   <form  method="post" action="./profile.php">
   <button type = "submit" name = "addTrip" id="add_trip"> Add Trip Plans </button>
-  <?php 
-
-   if (isset($_POST['addTrip'])){
-      $newPlanId = createPlan($userId, $userId, $db);
-   //$the_user = $_SESSION['user_id'];
-      header("Location:../trip/createTrip.php?planid=$newPlanId");  
-   }
-
-   ?>
   <button type = "button"> Add Friend </button>
   </form>
 </div>
