@@ -69,7 +69,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   var jumpEdit = function(){
     var url = 'http://tripubproject.web.engr.illinois.edu/411SP17/frontend'
     url += ('/trip/createTrip.php?planID=' + this.id)
-    window.location(url);
+    window.location.replace(url);
   }
 
   </script>
