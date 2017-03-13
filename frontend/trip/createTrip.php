@@ -79,8 +79,8 @@ session_start();
                 return NULL;
             }
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $latitude = $row['LATITUDE'];
-            $longitude = $row['LONGITUDE'];
+            $latitude = $row['latitude'];
+            $longitude = $row['longitude'];
             echo "la is $latitude, lo is $longitude";
             $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.Latitude < $latitude + 50) AND (locations.Latitude > $latitude - 50 ) AND (locations.Longitude < $longitude +20) AND (locations.Longitude > $longitude -20) AND (locations.NAME LIKE %$place%)";
             $result = $db->query($sql);
