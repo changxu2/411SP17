@@ -79,13 +79,13 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" onclick=\"jumpEdit()\" id = \"".$to_find."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" id = \"".$to_find."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
       <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
           }
           if (isset($_POST['addTrip'])){
             if(!empty($_POST['addTrip'])){
               $newPlanId = createPlan($userId, $userId, $db);
-              echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" onclick=\"jumpEdit()\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+              echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
         <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
             }
           }

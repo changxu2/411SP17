@@ -1,5 +1,4 @@
-
-$(".editPlan").on('click', '.btn', function(){
+$(".editPlan").on('click', function(){
         alert(this.id);
         alert(this.value);
-    });
+});
