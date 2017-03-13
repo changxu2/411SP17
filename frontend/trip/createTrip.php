@@ -183,8 +183,7 @@ session_start();
               <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
               <?php
                     foreach ($res as $loc) {
-                          echo "<li class=\"list-group-item\">".$loc['NAME']." ".$loc['TYPE']."</li>";
-
+                          echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]</li>";
                     }
               ?>
 
@@ -194,7 +193,7 @@ session_start();
           <div class="col-6">
             <li class="list-group-item">Add more entries to your plan!</li>
             <div class = "container">
-              <form class="form-inline" id = "searchForm" method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+              <form class="form" id = "searchForm" method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <label class="sr-only" for="inlineFormInput">Place</label>
                 <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
 
