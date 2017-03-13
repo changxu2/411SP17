@@ -138,32 +138,39 @@ button: hover {
     </tr>
   </table>
 </div>
+<div class="row">
+  <div class = "container">
+    <div class="col-3">
+    </div>
+    <div class="col-6">
+      <ul class="list-group">
+        <?php
+        for ($i = 0; $i < $count; $i++) {
+          //find the name of the plan with the ids array
+          $to_find = $ids[$i];
 
-<div class = "container">
-  <ul class="list-group">
-    <?php
-    for ($i = 0; $i < $count; $i++) {
-      //find the name of the plan with the ids array
-      $to_find = $ids[$i];
-
-      $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
-      $result_query = $db->query($sql) or die($db->error);
-      if (!$result_query) {
-        printf("Errormessage: %s\n", $db->error);
-      }
-      $result_row = $result_query->fetch_object();
-      echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
-<button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
-    }
-    if (isset($_POST['addTrip'])){
-      if(!empty($_POST['addTrip'])){
-        $newPlanId = createPlan($userId, $userId, $db);
-        echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
-  <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
-      }
-    }
-    ?>
-  </ul>
+          $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
+          $result_query = $db->query($sql) or die($db->error);
+          if (!$result_query) {
+            printf("Errormessage: %s\n", $db->error);
+          }
+          $result_row = $result_query->fetch_object();
+          echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
+    <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
+        }
+        if (isset($_POST['addTrip'])){
+          if(!empty($_POST['addTrip'])){
+            $newPlanId = createPlan($userId, $userId, $db);
+            echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
+      <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
+          }
+        }
+        ?>
+      </ul>
+    </div>
+    <div class="col-3">
+    </div>
+  </div>
 </div>
 
 <div class = "container" style = "background-color:#f1f1f1">
