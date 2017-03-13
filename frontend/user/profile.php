@@ -29,7 +29,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     return true;
   }
   function getFriend($uid, $db){
-    $sql = "SELECT user_name FROM user WHERE user_id IN (SELECT userID2 FROM Friend WHERE userID1='$uid');";
+    $sql = "SELECT user_name FROM user WHERE user_id IN (SELECT userID2 FROM Friend WHERE userID1=$uid);";
     $result = $db->query($sql);
     $myArray = array();
     while($row = $result->fetch_array(MYSQL_ASSOC)) {
