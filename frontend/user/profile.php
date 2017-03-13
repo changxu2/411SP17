@@ -54,131 +54,62 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="js/signUp.js"></script>
 </head>
-
-<style>
-table {
-  width: 100%;
-}
-
-table, th, td {
-  border: 1px solid pink;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 10px;
-  text-align: center;
-}
-
-.imgcontainer {
-  text_align: center;
-  margin: 24px 0 12px 0;
-}
-
-img.profile {
-  width: 50%;
-  border-radius: 50%;
-}
-
-.container {
-  padding: 16px;
-}
-
-table#t01 tr:nth-child(even) {
-    background-color: #eee;
-}
-table#t01 tr:nth-child(odd) {
-   background-color:#fff;
-}
-
-button{
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-}
-
-button: hover {
-  opacity: 0.7;
-}
-
-</style>
-
 <body>
 
   <ul class="nav nav-pills" style="background-color: aliceblue">
       <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
       <li class="nav-item">
-          <a class="nav-link active" href="#">My Profile</a>
+         <?php echo $userName." Email:[".$userEmail."]";?>
       </li>
       <li class="nav-item">
           <a class="nav-link" href="#">Create Trip Plan!</a>
       </li>
       <li class = "nav-item">
-          <a class = "nav-link" href = "login.php?logout" style ="padding-left: 670px">Logout</a >
+          <a class = "nav-link" href = "login.php?logout">Logout</a >
       </li>
   </ul>
 
+  <div class="row">
+    <div class = "container">
+      <div class="col-3">
+      </div>
+      <div class="col-6">
+        <ul class="list-group">
+          <?php
+          for ($i = 0; $i < $count; $i++) {
+            //find the name of the plan with the ids array
+            $to_find = $ids[$i];
 
-
-<h1> Profile Form </h1>
-
-<div class = "container">
-  <table>
-    <tr>
-      <th> userName </th>
-      <td> <?php echo $userName;?> </td>
-    </tr>
-    <tr>
-      <th> userEmail </th>
-      <td> <?php echo $userEmail;?> </td>
-    </tr>
-  </table>
-</div>
-<div class="row">
-  <div class = "container">
-    <div class="col-3">
-    </div>
-    <div class="col-6">
-      <ul class="list-group">
-        <?php
-        for ($i = 0; $i < $count; $i++) {
-          //find the name of the plan with the ids array
-          $to_find = $ids[$i];
-
-          $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
-          $result_query = $db->query($sql) or die($db->error);
-          if (!$result_query) {
-            printf("Errormessage: %s\n", $db->error);
-          }
-          $result_row = $result_query->fetch_object();
-          echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
-    <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
-        }
-        if (isset($_POST['addTrip'])){
-          if(!empty($_POST['addTrip'])){
-            $newPlanId = createPlan($userId, $userId, $db);
-            echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
+            $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
+            $result_query = $db->query($sql) or die($db->error);
+            if (!$result_query) {
+              printf("Errormessage: %s\n", $db->error);
+            }
+            $result_row = $result_query->fetch_object();
+            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
       <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
           }
-        }
-        ?>
-      </ul>
-    </div>
-    <div class="col-3">
+          if (isset($_POST['addTrip'])){
+            if(!empty($_POST['addTrip'])){
+              $newPlanId = createPlan($userId, $userId, $db);
+              echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
+        <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
+            }
+          }
+          ?>
+        </ul>
+      </div>
+      <div class="col-3">
+      </div>
     </div>
   </div>
-</div>
 
-<div class = "container" style = "background-color:#f1f1f1">
-  <form  method="post" action="./profile.php">
-  <button type = "submit" name = "addTrip" id="add_trip"> Add Trip Plans </button>
-  <button type = "button"> Add Friend </button>
-  </form>
-</div>
+  <div class = "container" style = "background-color:#f1f1f1">
+    <form  method="post" action="./profile.php">
+    <button type = "submit" name = "addTrip" id="add_trip"> Add Trip Plans </button>
+    <button type = "button"> Add Friend </button>
+    </form>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 
