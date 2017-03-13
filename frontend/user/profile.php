@@ -51,162 +51,65 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  <script src="js/signUp.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
-
-<style>
-table {
-  width: 100%;
-}
-
-table, th, td {
-  border: 1px solid pink;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 10px;
-  text-align: center;
-}
-
-.imgcontainer {
-  text_align: center;
-  margin: 24px 0 12px 0;
-}
-
-img.profile {
-  width: 50%;
-  border-radius: 50%;
-}
-
-.container {
-  padding: 16px;
-}
-
-table#t01 tr:nth-child(even) {
-    background-color: #eee;
-}
-table#t01 tr:nth-child(odd) {
-   background-color:#fff;
-}
-
-button{
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-}
-
-button: hover {
-  opacity: 0.7;
-}
-
-</style>
-
 <body>
 
   <ul class="nav nav-pills" style="background-color: aliceblue">
       <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
       <li class="nav-item">
-          <a class="nav-link active" href="#">My Profile</a>
+        <a class="navbar-brand" href="#">
+          <?php echo $userName." Email:[".$userEmail."]";?>
+        </a>
       </li>
       <li class="nav-item">
           <a class="nav-link" href="#">Create Trip Plan!</a>
       </li>
       <li class = "nav-item">
-          <a class = "nav-link" href = "login.php?logout" style ="padding-left: 670px">Logout</a >
+          <a class = "nav-link" href = "login.php?logout">Logout</a >
       </li>
   </ul>
 
+  <div class="row">
+    <div class = "container">
+      <div class="col-3">
+      </div>
+      <div class="col-6">
+        <ul class="list-group">
+          <?php
+          for ($i = 0; $i < $count; $i++) {
+            //find the name of the plan with the ids array
+            $to_find = $ids[$i];
 
-
-<h1> Profile Form </h1>
-
-<div class = "imgcontainer">
-  <img src = "Profile.png"  alt = "Profile" class = "profile">
-</div>
-
-<div class = "container">
-  <table>
-    <tr>
-      <th> userName </th>
-      <td> <?php echo $userName;?> </td>
-    </tr>
-    <tr>
-      <th> userEmail </th>
-      <td> <?php echo $userEmail;?> </td>
-    </tr>
-  </table>
-</div>
-</body>
-
-
-
-<h2><?php echo $userName;?>'s Trip Plans</h2>
-
-
-<table id = "t01" style = "width: 100%">
-  <?php for ($i = 0; $i < $count; $i++) {
-    //find the name of the plan with the ids array
-    $to_find = $ids[$i];
-
-    $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
-    $result_query = $db->query($sql) or die($db->error);
-    if (!$result_query) {
-      printf("Errormessage: %s\n", $db->error);
-    }
-    $result_row = $result_query->fetch_object();
-    ?>
-    <tr>
-      <td><p><?php echo $result_row->title; ?></p></td>
-    </tr>
-  <?php }
-    if (isset($_POST['addTrip'])){
-      $newPlanId = createPlan($userId, $userId, $db);
-      //$the_user = $_SESSION['user_id'];
-
-    }
-
-   ?>
-</table>
-
-<ul class="list-group">
-  <?php
-  for ($i = 0; $i < $count; $i++) {
-    //find the name of the plan with the ids array
-    $to_find = $ids[$i];
-
-    $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
-    $result_query = $db->query($sql) or die($db->error);
-    if (!$result_query) {
-      printf("Errormessage: %s\n", $db->error);
-    }
-    $result_row = $result_query->fetch_object();
-    echo htmlspecialchars("<li class=\"list-group-item active\">".$result_row->title."</li>");
-  }
-  if (isset($_POST['addTrip'])){
-    if(!empty($_POST['addTrip'])){
-      $newPlanId = createPlan($userId, $userId, $db);
-      echo htmlspecialchars("<li class=\"list-group-item active\">New Plan</li>");
-    }
-  }
-  ?>
-</ul>
-
-<div class = "container" style = "background-color:#f1f1f1">
-  <form  method="post" action="./profile.php">
-  <button type = "submit" name = "addTrip" id="add_trip"> Add Trip Plans </button>
-  <button type = "button"> Add Friend </button>
-  </form>
-</div>
+            $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
+            $result_query = $db->query($sql) or die($db->error);
+            if (!$result_query) {
+              printf("Errormessage: %s\n", $db->error);
+            }
+            $result_row = $result_query->fetch_object();
+            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+      <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
+          }
+          if (isset($_POST['addTrip'])){
+            if(!empty($_POST['addTrip'])){
+              $newPlanId = createPlan($userId, $userId, $db);
+              echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+        <button type=\"button\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
+            }
+          }
+          ?>
+        </ul>
+      </div>
+      <div class="col-3">
+        <form class="form-inline" method="post" action="./profile.php">
+          <button type = "submit" name = "addTrip" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
+          <button type = "button" class="btn btn-primary"> Add Friend </button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
+  <script src="/js/profile.js"></script>
 </body>
 </html>
