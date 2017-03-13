@@ -103,6 +103,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       </div>
     </div>
   </div>
-  <script src="/js/profile.js"></script>
+  <script src="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/js/profile.js"></script>
 </body>
 </html>
