@@ -67,7 +67,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   <script>
 
   var jumpEdit = function(){
-    var url = window.location.hostname
+    var url = document.domain
     url += ('/trip/createTrip.php?planID=' + this.id)
     window.location(url);
   }
