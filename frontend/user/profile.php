@@ -22,7 +22,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
    return;
   }
   function addFriend($myid, $friendName, $db) { //insert a new plan and return the id
-    if (!$db->query("INSERT INTO Friend(userID1, userID2) VALUES ($myid, (SELECT MIN(user_id) FROM users WHERE user_name = '$friendName'));")) {
+    if (!$db->query("INSERT INTO Friend(userID1, userID2) VALUES ($myid, (SELECT MIN(user_id) FROM users WHERE user_name = '$friendName'));")) {  //advanced query 1
         echo "INSERT failed: (" . $db->errno . ") " . $db->error;
         return false;
     }
@@ -53,9 +53,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   }
 
 
-  //$sql2 = "SELECT planID FROM Plan  WHERE createdByUserID = (SELECT userID2 From Friend WHERE userID1 = $userId);";   //TODO advanced query 1
-  $sql2 = "SELECT Plan.planID FROM Plan INNER JOIN Friend ON (Plan.ownedByUserID = Friend.userID2 AND Friend.userID1 = ".$userId.");";
-  echo $sql2;
+  $sql2 = "SELECT Plan.planID FROM Plan INNER JOIN Friend ON (Plan.ownedByUserID = Friend.userID2 AND Friend.userID1 = ".$userId.");"; //Advanced Query 2
   $result2 = $db->query($sql2) or die($db->error);
   if (!$result2) {
       printf("Errormessage: %s\n", $db->error);
@@ -66,7 +64,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
   if ($result2 -> num_rows > 0) {
     while ($row2 = $result2 -> fetch_assoc()) {
-      $ids2[$count2] = $row["planID"];
+      $ids2[$count2] = $row2["planID"];
       $count2 ++;
     }
   }
@@ -103,25 +101,27 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       <div class="col-6">
       	<div class="jumbotron">
         <ul class="list-group">
+          <a href="#" class="list-group-item active">
+            Plans you owned
+          </a>
           <?php
           for ($i = 0; $i < $count; $i++) {
             //find the name of the plan with the ids array
             $to_find = $ids[$i];
 
             $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
-            echo $sql;
             $result_query = $db->query($sql) or die($db->error);
             if (!$result_query) {
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" id = \"".$to_find."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+            echo ("<li class=\"list-group-item\">".$result_row->title."<button type=\"button\" id = \"".$to_find."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
       <button type=\"button\" id = \"".$to_find."d\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
           }
           if (isset($_POST['addTrip'])){
             if(!empty($_POST['addTrip'])){
               $newPlanId = createPlan($userId, $userId, $db);
-              echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+              echo ("<li class=\"list-group-item\">New Plan<button type=\"button\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
         <button type=\"button\" id = \"".$newPlanId."d\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
               $page = $_SERVER['PHP_SELF'];
               $sec = "1";
@@ -147,20 +147,22 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
           ?>
         </ul>
         <ul class="list-group" id = "friend_plan_list">
+          <a href="#" class="list-group-item active">
+            Plans from your friend
+          </a>
           <?php
           for ($i = 0; $i < $count2; $i++) {
             //find the name of the plan with the ids array
             $to_find2 = $ids2[$i];
 
             $sql = "SELECT title FROM Plan WHERE planID = $to_find2;";
-            echo $sql;
             $result_query = $db->query($sql) or die($db->error);
             if (!$result_query) {
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" id = \"".$to_find2."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
-      <button type=\"button\" id = \"".$to_find2."d\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
+            echo ("<li class=\"list-group-item\">".$result_row->title."<button type=\"button\" id = \"".$to_find2."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+      </li>");
           }
           ?>
         </ul>
