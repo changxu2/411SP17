@@ -1,4 +1,4 @@
-<?php
+
     <div class="row">
             <div class="col-6">
             <form id = "displaySearchForm" method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -7,7 +7,7 @@
                                 echo "<div class="form-check">";
                                 echo "<label class="form-check-label">";
                                 echo "<input class="form-check-input" type="radio" name="$result[ID]" value="option1">";
-                                echo "$result[NAME] $result[TYPE]";
+                                echo $result[NAME]." ".$result[TYPE];
                                 echo "</label>";
                                 echo "</div>";
                             }
@@ -16,4 +16,3 @@
             </form>
             </div>
     </div>
-?>
