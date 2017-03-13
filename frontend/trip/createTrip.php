@@ -1,3 +1,6 @@
+<?php
+session_start();
+ ?>
 <!DOCTYPE html>
 <html >
 <head>
@@ -15,13 +18,6 @@
 
 </head>
 <?php
-
-session_start();
-
-
-
-
-
          function connectToDb() {
             $db = new mysqli('localhost', 'tripubproject_adm', '12345shangshandalaohu', 'tripubproject_DB1');
             if($db->connect_errno > 0) {
