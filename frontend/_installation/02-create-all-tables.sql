@@ -35,3 +35,8 @@ CREATE TABLE IF NOT EXISTS `Comments` (
  `content` varchar(4096),
  PRIMARY KEY(`commentID`)
 );
+
+CREATE TABLE IF NOT EXISTS `contains`(
+	`planID` int(11)
+	`locationID` int(11)
+)
