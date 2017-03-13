@@ -1,7 +1,15 @@
 <?php
 
 session_start();
+require_once("config/db.php");
 
+function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return the id
+  if (!$db->query("INSERT INTO Plan VALUES (NULL, NULL, $pre_user, $crr_user)")) {
+      echo "INSERT failed: (" . $db->errno . ") " . $db->error;
+      return NULL;
+  }
+  return $db->insert_id;
+ }
 
 ?>
 
@@ -110,14 +118,14 @@ button: hover {
     </ul>
 
    <!--  <?
-    while ($row = $result->fetch_assoc()) {
-        printf ("%s (%s)\n", $row["Name"], $row["CountryCode"]);
+    //while ($row = $result->fetch_assoc()) {
+      //  printf ("%s (%s)\n", $row["Name"], $row["CountryCode"]);
     }
     ?> -->
    <!--  <div> -->
 
-<!-- Hey, my dear <?php echo $_SESSION['user_name']; ?>. You are logged in!!!!!!!
-You user id is: <?echo $_GET['user_id']?>
+<!-- Hey, my dear <?//php echo $_SESSION['user_name']; ?>. You are logged in!!!!!!!
+You user id is: <?//echo $_GET['user_id']?>
     </div> -->
 
 <h1> Profile Form </h1>
@@ -140,10 +148,10 @@ You user id is: <?echo $_GET['user_id']?>
 </div>
 </body>
 
-<head>
-<meta charset = "utf-8">
-<title><?php echo $userName;?>'s Trip Plans</title>
-</head>
+
+
+<h2><?php echo $userName;?>'s Trip Plans</h2>
+
 
 <table id = "t01" style = "width: 100%">
   <?php for ($i = 0; $i < $count; $i++) { 
@@ -160,20 +168,19 @@ You user id is: <?echo $_GET['user_id']?>
 </table>
 
 <div class = "container" style = "background-color:#f1f1f1">
-  <button type = "button" onclick = "{}"> Add Trip Plans </button>
+  <form  method="post" action="./profile.php">
+  <button type = "submit" name = "addTrip" id="add_trip"> Add Trip Plans </button>
   <?php 
-  function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return the id
-    if (!$db->query("INSERT INTO Plan VALUES ($pre_user, $crr_user)")) {
-        echo "INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
-        return NULL;
-    }
-    return $mysqli->insert_id;
-   }
-   $newPlanId = createPlan($userId, NULL, $db);
+
+   if (isset($_POST['addTrip'])){
+      $newPlanId = createPlan($userId, $userId, $db);
    //$the_user = $_SESSION['user_id'];
-    header("Location:../trip/createTrip.php?planid=$newPlanId");
+      header("Location:../trip/createTrip.php?planid=$newPlanId");  
+   }
+
    ?>
   <button type = "button"> Add Friend </button>
+  </form>
 </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
