@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-session_start();
 require_once("config/db.php");
 
 function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return the id
