@@ -55,6 +55,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
   //$sql2 = "SELECT planID FROM Plan  WHERE createdByUserID = (SELECT userID2 From Friend WHERE userID1 = $userId);";   //TODO advanced query 1
   $sql2 = "SELECT Plan.planID FROM Plan INNER JOIN Friend ON (Plan.ownedByUserID = Friend.userID2 AND Friend.userID1 = ".$userId.");";
+  echo $sql2;
   $result2 = $db->query($sql2) or die($db->error);
   if (!$result2) {
       printf("Errormessage: %s\n", $db->error);
@@ -108,6 +109,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
             $to_find = $ids[$i];
 
             $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
+            echo $sql;
             $result_query = $db->query($sql) or die($db->error);
             if (!$result_query) {
               printf("Errormessage: %s\n", $db->error);
@@ -151,6 +153,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
             $to_find2 = $ids2[$i];
 
             $sql = "SELECT title FROM Plan WHERE planID = $to_find2;";
+            echo $sql;
             $result_query = $db->query($sql) or die($db->error);
             if (!$result_query) {
               printf("Errormessage: %s\n", $db->error);
