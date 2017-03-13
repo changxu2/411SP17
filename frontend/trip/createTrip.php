@@ -118,6 +118,14 @@ session_start();
           }
           return NULL;
         }
+        function changeName($planid, $newname, $db){
+          $sql = "UPDATE Plan SET title='$newname' WHERE planID=$planid;";
+          $result = $db->query($sql);
+          if (!$result) {
+              printf("Errormessage: %s\n", $db->error);
+          }
+          return NULL;
+        }
 //$userId = $_GET['user_id'];
 //    $userName = $_SESSION['user_name'];
 //    $userEmail = $_SESSION['user_email'];
@@ -173,6 +181,10 @@ session_start();
               $res = checkPlan($db, $_GET['planid']);
               $haha = getTitle($db, $_GET['planid']);
             }
+            if(isset($_POST['newname']) && !empty($_POST['newname'])){
+              $haha = $_POST['newname'];
+              changeName($_GET['planid'], $_POST['newname'], $db);
+            }
             // check if result is fine, if yes do something..
             ?>
             <ul id = "planlist" class="list-group">
@@ -195,6 +207,12 @@ session_start();
             <li class="list-group-item">Add more entries to your plan!</li><br>
             <div class = "container">
               <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php">
+                <input type="text" class="form-control" id="inlineFormInput" placeholder="rename the plan" name = "newname">
+                <button type="submit" id="searchBtn" class="btn btn-primary">Rename</button>
+              </form>
+            </div>
+            <div class = "container">
+              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php">
                 <label class="sr-only" for="inlineFormInput">Place</label>
                 <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
 
@@ -204,9 +222,10 @@ session_start();
                   <input type="number" class="form-control" id="inlineFormInputGroup" placeholder="zipcode" name = "zipcode">
                 </div>
 
-                <button type="submit" id="searchBtn" class="btn btn-primary">Submit</button>
+                <button type="submit" id="searchBtn" class="btn btn-primary">Search</button>
               </form>
-
+            </div>
+            <div class = "container">
               <?php
               if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
                 echo "<ul class=\"list-group\">";
