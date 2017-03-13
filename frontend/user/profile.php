@@ -28,6 +28,15 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
     return true;
   }
+  function getFriend($uid, $db){
+    $sql = "SELECT userID2 FROM Friend WHERE userID1 = '$uid';";
+    $result = $db->query($sql);
+    $myArray = array();
+    while($row = $result->fetch_array(MYSQL_ASSOC)) {
+      $myArray[] = $row;
+    }
+    return $myArray;
+  }
   $userId = $_SESSION['user_id'];
   $userName = $_SESSION['user_name'];
   $userEmail = $_SESSION['user_email'];
@@ -148,7 +157,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         </ul>
         <ul class="list-group" id = "friend_plan_list">
           <a href="#" class="list-group-item active">
-            Plans from your friend
+            Plans From Your Followed Users
           </a>
           <?php
           for ($i = 0; $i < $count2; $i++) {
@@ -170,10 +179,23 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       </div>
       <div class="col-6">
         <form method="post" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">
-          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" name="friend" placeholder="Friend Username">
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" name="friend" placeholder="Follow by Username">
           <button type = "button" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
-          <button type = "submit" class="btn btn-primary"> Add Friend </button>
+          <button type = "submit" class="btn btn-primary"> Follow This User </button>
         </form>
+
+        <div class = "container">
+          <ul class="list-group" id = "friend_plan_list">
+            <li class="list-group-item active">You are following</li>
+            <?php
+              $row = getFriend($userId, $db);
+              for ($row as $ele){
+                echo "<li class=\"list-group-item\">".$ele['userID2']."</li>";
+              }
+            ?>
+          </ul>
+        </div>
+
       </div>
     </div>
   </div>
