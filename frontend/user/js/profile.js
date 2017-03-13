@@ -1,4 +1,3 @@
 $(".editPlan").on('click', function(){
-        alert(this.id);
-        alert(this.value);
+  window.location.replace('http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?planid='+this.id)
 });
