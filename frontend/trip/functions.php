@@ -1,6 +1,6 @@
 <?php
          function connectToDb() {
-            $db = new mysqli('localhost', 'tripubproject_adm', 'tripubproject_DB1', '12345shangshandalaohu');
+            $db = new mysqli('localhost', 'tripubproject_adm', '12345shangshandalaohu', 'tripubproject_DB1');
 
 
 
@@ -15,19 +15,25 @@
                 echo "INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
                 return NULL;
             }
-            return $mysqli->insert;
+            return $mysqli->insert_id;
          }
 
          function checkPlan($db, $pid) { //insert a new plan and return the id
             if ($result = $db->query("SELECT Plan.Title, contains.locationID FROM Plan, contains WHERE Plan.planID = $pid AND contains.planID = $pid")) {
-              $currentfield = mysqli_field_tell($result);
-              printf("Column %d:\n", $currentfield);
-              printf("Name:     %s\n", $finfo->name);
-              printf("Table:    %s\n", $finfo->table);
-              $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-              return $row;
+//              $currentfield = mysqli_field_tell($result);
+//              printf("Column %d:\n", $currentfield);
+//              printf("Name:     %s\n", $finfo->name);
+//              printf("Table:    %s\n", $finfo->table);
+//              $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+//              return $row;
+              $myArray = array();
+              while($row = $result->fetch_array(MYSQL_ASSOC)) {
+                            $myArray[] = $row;
+                          }
+              //$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+              return $myArray;
             }
-            echo "INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            echo "SELECT failed: (" . $mysqli->errno . ") " . $mysqli->error;
             return NULL;
          }
 
@@ -52,8 +58,8 @@
                 return NULL;
             }
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $latitude = $row['Latitude']
-            $longitude = $row['Longitude']
+            $latitude = $row['LATITUDE'];
+            $longitude = $row['LONGITUDE'];
             $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.Latitude < $latitude + 20) AND (locations.Latitude > $latitude - 20 ) AND (locations.Longitude < $longitude +20) AND (locations.Longitude > $longitude -20) AND (locations.NAME LIKE %place%)";
             $result = $db->query($sql);
             $myArray = array();
@@ -61,8 +67,7 @@
               $myArray[] = $row;
             }
 
-            echo $myArray;
-            return;
+            return $myArray;
          }
 
          function getTransById($transID, $db) {
