@@ -1,5 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
-
 session_start();
 require_once("config/db.php");
 
@@ -35,16 +36,10 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
   }
   $len = $count;
-
-
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 
   <link rel="stylesheet" href="css/signInUp.css">
 
@@ -56,22 +51,21 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 <body>
 
   <ul class="nav nav-pills" style="background-color: aliceblue">
-      <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
+      <a class="navbar-brand" href="../">Triphub</a>
       <li class="nav-item">
         <a class="navbar-brand" href="#">
-          <?php echo $userName." Email:[".$userEmail."]";?>
+          <?php echo $_SESSION['user_name']." Email:[".$_SESSION['user_email']."]";?>
         </a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="#">Create Trip Plan!</a>
+          <a class="nav-link" href="">Profile</a>
       </li>
       <li class = "nav-item">
           <a class = "nav-link" href = "login.php?logout">Logout</a >
       </li>
   </ul>
-
-  <div class="row">
-    <div class = "container">
+  <div class="container">
+    <div class="row">
       <div class="col-3">
       </div>
       <div class="col-6">
