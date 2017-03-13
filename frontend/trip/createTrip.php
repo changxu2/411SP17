@@ -161,9 +161,6 @@ session_start();
             $db = connectToDb();
 
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-              if(isset($_SESSION['currentPlan'])){
-                $_GET['planid'] = $_SESSION['currentPlan'];
-              }
               if(isset($_GET['planid']) && !empty($_GET['planid'])){
                 $_SESSION['currentPlan'] = $_GET['planid'];
                 //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
@@ -187,7 +184,7 @@ session_start();
               <?php
                     foreach ($res as $loc) {
                           echo "<li class=\"list-group-item\">".$loc['NAME']." ".$loc['TYPE']."</li>";
-                          
+
                     }
               ?>
 
