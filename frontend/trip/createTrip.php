@@ -184,7 +184,7 @@ session_start();
                   if(isset($_POST['addID']) && !empty($_POST['addID'])){
                     $row = getLocById($_POST['addID'], $db);
                     echo "<li class=\"list-group-item\">".$row['NAME']."   Type[".$row['TYPE']."]</li>";
-                    addToPlan($_GET['planid'], $_POST['addID'], $db)
+                    addToPlan($_GET['planid'], $_POST['addID'], $db);
                   }
               ?>
 
