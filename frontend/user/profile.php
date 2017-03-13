@@ -126,10 +126,6 @@ button: hover {
 
 <h1> Profile Form </h1>
 
-<div class = "imgcontainer">
-  <img src = "Profile.png"  alt = "Profile" class = "profile">
-</div>
-
 <div class = "container">
   <table>
     <tr>
@@ -142,10 +138,6 @@ button: hover {
     </tr>
   </table>
 </div>
-
-
-
-<h2><?php echo $userName;?>'s Trip Plans</h2>
 
 <div class = "container">
   <ul class="list-group">
@@ -160,13 +152,13 @@ button: hover {
         printf("Errormessage: %s\n", $db->error);
       }
       $result_row = $result_query->fetch_object();
-      echo htmlspecialchars("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
+      echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
 <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
     }
     if (isset($_POST['addTrip'])){
       if(!empty($_POST['addTrip'])){
         $newPlanId = createPlan($userId, $userId, $db);
-        echo htmlspecialchars("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
+        echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" class=\"btn btn-primary btn-sm\">Edit Plan</button>
   <button type=\"button\" class=\"btn btn-secondary btn-sm\">Delete Plan</button></li>");
       }
     }
