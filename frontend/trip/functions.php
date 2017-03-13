@@ -1,7 +1,8 @@
 <?php
          function connectToDb() {
-            $db = new mysqli('localhost', '
-tripubproject_adm', '12345shangshandalaohu', 'tripubproject_DB1');
+            $db = new mysqli('localhost', 'tripubproject_adm', 'tripubproject_DB1', '12345shangshandalaohu');
+
+
 
             if($db->connect_errno > 0) {
                 die('Unable to connect to database [' . $db->connect_error . ']');
