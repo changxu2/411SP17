@@ -7,7 +7,7 @@
 require_once("config/db.php");
 
 function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return the id
-
+  
   if (!$db->query("INSERT INTO Plan (title, ownedByUserID, createdByUserID) VALUES (\'New Plan\', ".$pre_user.", ".$crr_user.");")) {
       echo "INSERT failed: (" . $db->errno . ") " . $db->error;
       return NULL;
@@ -112,11 +112,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
           }
           ?>
         </ul>
-        <?php
-          $a = "a";
-          $b = "b";
-          echo "INSERT INTO Plan (title, ownedByUserID, createdByUserID) VALUES (\'New Plan\', ".$a.", ".$b.");";
-         ?>>
         </div>
       </div>
       <div class="col-6">
