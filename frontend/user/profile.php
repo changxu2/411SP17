@@ -115,7 +115,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         <?php
           $a = "a";
           $b = "b";
-          echo "INSERT INTO Plan (title, ownedByUserID, createdByUserID) VALUES (\'New Plan\', ".$a.", ".$b.");";
+          echo "INSERT INTO Plan (title, ownedByUserID, createdByUserID) VALUES ('New Plan', ".$a.", ".$b.");";
          ?>>
         </div>
       </div>
