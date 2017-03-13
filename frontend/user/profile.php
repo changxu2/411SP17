@@ -21,8 +21,8 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
    }
    return;
   }
-  function addFriend($me, $friend, $db) { //insert a new plan and return the id
-    if (!$db->query("INSERT INTO Friend(userID1, userID2) VALUES ( ". $me .", ".$friend. ");")) {
+  function addFriend($myid, $friendName, $db) { //insert a new plan and return the id
+    if (!$db->query("INSERT INTO Friend(userID1, userID2) VALUES ($myid, MIN(SELECT user_id FROM users WHERE user_name = $friendName));")) {
         echo "INSERT failed: (" . $db->errno . ") " . $db->error;
         return false;
     }
