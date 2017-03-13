@@ -2,25 +2,134 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>Tripub</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
 </head>
 <?php
-$userId = $_GET['user_id'];
-    $userName = $_SESSION['user_name'];
-    $userEmail = $_SESSION['user_email'];
-    $db = new mysqli("localhost", "tripubproject_admin", "12345shangshandalaohu", "tripubproject_DB1");
+
+session_start();
+
+
+
+
+
+         function connectToDb() {
+            $db = new mysqli('localhost', 'tripubproject_adm', '12345shangshandalaohu', 'tripubproject_DB1');
+            if($db->connect_errno > 0) {
+                die('Unable to connect to database [' . $db->connect_error . ']');
+            }
+            return $db;
+         }
+         function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return the id
+            if (!$db->query("INSERT INTO Plan VALUES (NULL,NULL,$pre_user, $crr_user)")) {
+                echo "INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
+                return NULL;
+            }
+            return $mysqli->insert_id;
+         }
+         function checkPlan($db, $pid) { //insert a new plan and return the id
+            if ($result = $db->query("SELECT Plan.Title, locations.NAME, locations.TYPE FROM Plan, contains, locations WHERE Plan.planID = $pid AND contains.planID = $pid AND locations.ID = contains.locationID")) {
+//              $currentfield = mysqli_field_tell($result);
+//              printf("Column %d:\n", $currentfield);
+//              printf("Name:     %s\n", $finfo->name);
+//              printf("Table:    %s\n", $finfo->table);
+//              $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+//              return $row;
+              $myArray = array();
+              while($row = $result->fetch_array(MYSQL_ASSOC)) {
+                            $myArray[] = $row;
+
+                          }
+              //$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+              return $myArray;
+            }
+            echo "SELECT failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            return NULL;
+         }
+         function getTitle($db, $pid) {
+          if ($result = $db->query("SELECT title FROM Plan WHERE Plan.planID = $pid")) {
+              $result_fetch = $result->fetch_object();
+              $fuck = $result_fetch->title;
+              return $fuck;
+          }
+         }
+         function closeDb($db) {
+            $db->close();
+         }
+//         function getTrans($db) {
+//            $sql = "SELECT id, firstname, lastname FROM MyGuests";
+//            $result = $conn->query($sql);
+//         }
+//         function initTransQuery($db) {
+//            $stmt = $db->prepare("SELECT Name FROM Transportation WHERE TrDID = ?");
+//            return $stmt;
+//         }
+         function getPlaces($db, $zipcode, $place) {
+            $zip = ltrim($zipcode, '0');
+            $sql = "SELECT longitude, latitude FROM zipcode WHERE ZIP = $zip";
+            $result = $db->query($sql);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+                return NULL;
+            }
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $latitude = $row['LATITUDE'];
+            $longitude = $row['LONGITUDE'];
+            $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.Latitude < $latitude + 20) AND (locations.Latitude > $latitude - 20 ) AND (locations.Longitude < $longitude +20) AND (locations.Longitude > $longitude -20) AND (locations.NAME LIKE %place%)";
+            $result = $db->query($sql);
+            $myArray = array();
+            while($row = $result->fetch_array(MYSQL_ASSOC)) {
+              $myArray[] = $row;
+            }
+            return $myArray;
+         }
+         function getTransById($transID, $db) {
+            $sql = "SELECT Type FROM Transportation WHERE trDID = $transID";
+            $result = $db->query($sql);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+            }
+            return $result;
+         }
+        function getLocById($locID, $db) {
+            $sql = "SELECT Name, Type, Longitude, Latitude FROM locations WHERE ID = $locID";
+                $result = $db->query($sql);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+            }
+            return $result;
+        }
+
+
+
+
+
+
+
+
+
+//$userId = $_GET['user_id'];
+//    $userName = $_SESSION['user_name'];
+//    $userEmail = $_SESSION['user_email'];
+
+    $db = new mysqli("localhost", "tripubproject_adm", "12345shangshandalaohu", "tripubproject_DB1");
      if($db->connect_errno > 0) {
         die('Unable to connect to database [' . $db->connect_error . ']');
      }
+
      ?>
 <body>
 <!--Google Font - Work Sans-->
-<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
 <ul class="nav nav-pills" style="background-color: aliceblue">
     <a class="navbar-brand" href="/search.php" style="padding-left: 1%">Triphub</a>
     <li class="nav-item">
@@ -48,15 +157,19 @@ $userId = $_GET['user_id'];
         <div class="row">
           <div class="col-6">
             <?php
-            require('functions.php');
+
             $db = connectToDb();
-            echo "Test";
+
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+              if(isset($_SESSION['currentPlan'])){
+                $_GET['planid'] = $_SESSION['currentPlan'];
+              }
               if(isset($_GET['planid']) && !empty($_GET['planid'])){
                 $_SESSION['currentPlan'] = $_GET['planid'];
                 //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
                 $res = checkPlan($db, $_GET['planid']);
-                //echo "plan info" . $res;
+                $haha = getTitle($db, $_GET['planid']);
+
               }
               // check if result is fine, if yes do something..
               if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
@@ -64,16 +177,16 @@ $userId = $_GET['user_id'];
                 $zipcode = $_GET['zipcode'];
                 $result = getPlaces($db, $zipcode, $place);
                 //echo "search result" . $result;
-                include showLocs.php;
+                include("showLocs.php");
               }
               $_GET = array();
             }
             ?>
             <ul id = "planlist" class="list-group">
-              <li class="list-group-item active">Plan: $res[0]['Title']</li>
+              <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
               <?php
                     foreach ($res as $loc) {
-                          echo htmlspecialchars("<li class=\"list-group-item\">".$loc['NAME']." ".$loc['TYPE']."</li>");
+                          echo "<li class=\"list-group-item\">".$loc['NAME']." ".$loc['TYPE']."</li>";
                           
                     }
               ?>
@@ -110,7 +223,6 @@ $userId = $_GET['user_id'];
 
 
 <script src="js/index.js"></script>
-<script>
-</script>
+
 </body>
 </html>
