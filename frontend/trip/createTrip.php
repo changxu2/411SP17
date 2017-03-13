@@ -71,6 +71,7 @@ session_start();
 //         }
          function getPlaces($db, $zipcode, $place) {
             $zip = ltrim($zipcode, '0');
+            echo "zipcode is $zip";
             $sql = "SELECT longitude, latitude FROM zipcode WHERE ZIP = $zip";
             $result = $db->query($sql);
             if (!$result) {
@@ -80,6 +81,7 @@ session_start();
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             $latitude = $row['LATITUDE'];
             $longitude = $row['LONGITUDE'];
+            echo "la is $latitude, lo is $longitude";
             $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.Latitude < $latitude + 50) AND (locations.Latitude > $latitude - 50 ) AND (locations.Longitude < $longitude +20) AND (locations.Longitude > $longitude -20) AND (locations.NAME LIKE %$place%)";
             $result = $db->query($sql);
             if(!$result){
