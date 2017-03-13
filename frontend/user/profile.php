@@ -67,8 +67,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
   <div class="container" id = "mainW">
     <div class="row">
-      <div class="col-3">
-      </div>
       <div class="col-6">
       	<div class="jumbotron">
         <ul class="list-group">
@@ -97,7 +95,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         </ul>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-6">
         <form class="form-inline" method="post" action="./profile.php">
           <button type = "submit" name = "addTrip" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
           <button type = "button" class="btn btn-primary"> Add Friend </button>
