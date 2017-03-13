@@ -96,11 +96,14 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               $newPlanId = createPlan($userId, $userId, $db);
               echo ("<li class=\"list-group-item active\">New Plan<button type=\"button\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
         <button type=\"button\" id = \"".$newPlanId."d\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
+              header("Refresh:0");
+
             }
           }
           if (isset($_POST['deletePlan'])){
             if(!empty($_POST['deletePlan'])){
               deletePlan($_POST['deletePlan'], $db);
+              header("Refresh:0");
             }
           }
           ?>
