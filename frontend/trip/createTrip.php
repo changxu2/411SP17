@@ -168,15 +168,19 @@ session_start();
                 $haha = getTitle($db, $_GET['planid']);
 
               }
+              else{
+                $_GET['planid'] = $_SESSION['currentPlan'];
+                $res = checkPlan($db, $_GET['planid']);
+                $haha = getTitle($db, $_GET['planid']);
+              }
               // check if result is fine, if yes do something..
-              if(isset($_GET['place']) && !empty($_GET['place']) && isset($_GET['zipcode']) && !empty($_GET['zipcode'])){
-                $place = $_GET['place'];
-                $zipcode = $_GET['zipcode'];
+              if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
+                $place = $_POST['place'];
+                $zipcode = $_POST['zipcode'];
                 $result = getPlaces($db, $zipcode, $place);
                 //echo "search result" . $result;
                 include("showLocs.php");
               }
-              $_GET = array();
             }
             ?>
             <ul id = "planlist" class="list-group">
@@ -193,7 +197,7 @@ session_start();
           <div class="col-6">
             <li class="list-group-item">Add more entries to your plan!</li>
             <div class = "container">
-              <form class="form" id = "searchForm" method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php">
                 <label class="sr-only" for="inlineFormInput">Place</label>
                 <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
 
