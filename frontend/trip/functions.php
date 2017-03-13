@@ -19,7 +19,7 @@
          }
 
          function checkPlan($db, $pid) { //insert a new plan and return the id
-            if ($result = $db->query("SELECT Plan.Title, contains.locationID FROM Plan, contains WHERE Plan.planID = $pid AND contains.planID = $pid")) {
+            if ($result = $db->query("SELECT Plan.Title, locations.NAME, locations.TYPE FROM Plan, contains, locations WHERE Plan.planID = $pid AND contains.planID = $pid AND locations.ID = contains.locationID")) {
 //              $currentfield = mysqli_field_tell($result);
 //              printf("Column %d:\n", $currentfield);
 //              printf("Name:     %s\n", $finfo->name);

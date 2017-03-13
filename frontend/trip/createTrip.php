@@ -9,17 +9,26 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
+<?php
+$userId = $_GET['user_id'];
+    $userName = $_SESSION['user_name'];
+    $userEmail = $_SESSION['user_email'];
+    $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
+     if($db->connect_errno > 0) {
+        die('Unable to connect to database [' . $db->connect_error . ']');
+     }
+     ?>
 <body>
 <!--Google Font - Work Sans-->
 <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
 <ul class="nav nav-pills" style="background-color: aliceblue">
-    <a class="navbar-brand" href="#" style="padding-left: 1%">Triphub</a>
+    <a class="navbar-brand" href="/search.php" style="padding-left: 1%">Triphub</a>
     <li class="nav-item">
-        <a class="nav-link active" href="#">My Profile</a>
+        <a class="nav-link active" href="../user/profile.php?profile.php?user_id=$the_user">My Profile</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Create Trip Plan!</a>
+        <a class="nav-link" href="">Create Trip Plan!</a>
     </li>
 </ul>
 <div class="container">
@@ -67,7 +76,8 @@
               <li class="list-group-item active">Plan: $res[0]['Title']</li>
               <?php
                     foreach ($res as $loc) {
-                          echo "<li class="list-group-item">$loc['locations']['NAME'] $loc['locations']['TYPE']</li>"
+                          echo htmlspecialchars("<li class=\"list-group-item\">".$loc['NAME']." ".$loc['TYPE']."</li>");
+
                           
                     }
               ?>
