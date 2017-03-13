@@ -42,6 +42,7 @@
             <?php
             require('functions.php');
             $db = connectToDb();
+            echo "Test";
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
               if(isset($_GET['planid']) && !empty($_GET['planid'])){
                 $_SESSION['currentPlan'] = $_GET['planid'];
