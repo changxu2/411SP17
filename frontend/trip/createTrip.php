@@ -209,7 +209,7 @@ session_start();
 
               <?php
               if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
-                echo "<ul class=\"list-group\">"
+                echo "<ul class=\"list-group\">";
                 $place = $_POST['place'];
                 $zipcode = $_POST['zipcode'];
                 $result = getPlaces($db, $zipcode, $place);
