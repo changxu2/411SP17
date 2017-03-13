@@ -56,7 +56,7 @@
                 $zipcode = $_GET['zipcode'];
                 $result = getPlaces($db, $zipcode, $place);
                 //echo "search result" . $result;
-                include showLocs.php
+                include showLocs.php;
 
               }
 
@@ -68,7 +68,7 @@
               <?php
                     foreach ($res as $loc) {
                           echo "<li class="list-group-item">$loc['locations']['NAME'] $loc['locations']['TYPE']</li>"
-                          
+
                     }
               ?>
 
