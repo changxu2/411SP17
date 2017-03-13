@@ -216,7 +216,7 @@ session_start();
                 foreach ($result as $loc) {
                   echo "<li class=\"list-group-item active\">". $loc["NAME"]. "  Type: [".$loc["TYPE"]."] <button type=\"button\" id = \"".$loc["ID"]."\" class=\"btn btn-secondary btn-sm addLoc\">Add Entry</button></li>";
                 }
-                echo "<\ul>"
+                echo "<\ul>";
               }
               ?>
             </div>
