@@ -21,6 +21,13 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
    }
    return;
   }
+  function addFriend($me, $friend, $db) { //insert a new plan and return the id
+    if (!$db->query("INSERT INTO Friend(userID1, userID2) VALUES ( ". $me .", ".$friend. ");")) {
+        echo "INSERT failed: (" . $db->errno . ") " . $db->error;
+        return false;
+    }
+    return true;
+  }
   $userId = $_SESSION['user_id'];
   $userName = $_SESSION['user_name'];
   $userEmail = $_SESSION['user_email'];
@@ -44,7 +51,23 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       $count ++;
     }
   }
-  $len = $count;
+
+
+  $sql2 = "SELECT * FROM Plan WHERE createdByUserID = (SELECT userID2 From Friend WHERE userID1 = $userId);";   //TODO advanced query 1
+  $result2 = $db->query($sql2) or die($db->error);
+  if (!$result2) {
+      printf("Errormessage: %s\n", $db->error);
+  }
+
+  $ids2 = array();
+  $count2 = 0;
+
+  if ($result2 -> num_rows > 0) {
+    while ($row2 = $result2 -> fetch_assoc()) {
+      $ids2[$count2] = $row["planID"];
+      $count2 ++;
+    }
+  }
 ?>
 <head>
   <meta charset="UTF-8">
@@ -110,18 +133,41 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               header("Refresh: $sec; url=$page");
             }
           }
+          if (isset($_POST['friend'])){
+            if(!empty($_POST['friend'])){
+              addFriend($userId, $_POST['friend'], $db);
+              $page = $_SERVER['PHP_SELF'];
+              $sec = "1";
+              header("Refresh: $sec; url=$page");
+            }
+          }
           ?>
         </ul>
-        <?php
-          $a = "a";
-          $b = "b";
-          echo "INSERT INTO Plan (title, ownedByUserID, createdByUserID) VALUES ('New Plan', ".$a.", ".$b.");";
-         ?>>
+        <ul class="list-group" id = "friend_plan_list">
+          <?php
+          for ($i = 0; $i < $count2; $i++) {
+            //find the name of the plan with the ids array
+            $to_find2 = $ids2[$i];
+
+            $sql = "SELECT title FROM Plan WHERE planID = $to_find2;";
+            $result_query = $db->query($sql) or die($db->error);
+            if (!$result_query) {
+              printf("Errormessage: %s\n", $db->error);
+            }
+            $result_row = $result_query->fetch_object();
+            echo ("<li class=\"list-group-item active\">".$result_row->title."<button type=\"button\" id = \"".$to_find2."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+      <button type=\"button\" id = \"".$to_find2."d\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
+          }
+          ?>
+        </ul>
         </div>
       </div>
       <div class="col-6">
-        <button type = "button" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
-        <button type = "button" class="btn btn-primary"> Add Friend </button>
+        <form method="post" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">
+          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" name="friend" placeholder="Friend Username">
+          <button type = "button" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
+          <button type = "submit" class="btn btn-primary"> Add Friend </button>
+        </form>
       </div>
     </div>
   </div>
