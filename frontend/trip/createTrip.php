@@ -67,7 +67,7 @@
               <li class="list-group-item active">Plan: $res[0]['Title']</li>
               <?php
                     foreach ($res as $loc) {
-                      echo "<li class=\"list-group-item\">$loc[\'locations\'][\'NAME\'] $loc[\'locations\'][\'TYPE\']</li>";
+                      echo "<li class=\"list-group-item\">$loc['locations']['NAME'] $loc['locations']['TYPE']</li>";
                     }
               ?>
 
