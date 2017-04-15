@@ -82,7 +82,7 @@ session_start();
           $latitude = $row['latitude'];
           $longitude = $row['longitude'];
           //echo "la is $latitude, lo is $longitude";
-          $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.LATITUDE < $latitude + 3) AND (locations.LATITUDE > $latitude - 3 ) AND (locations.LONGITUDE < $longitude +3) AND (locations.LONGITUDE > $longitude -3) AND (locations.NAME LIKE '%$place%');";
+          $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.LATITUDE < $latitude + 2) AND (locations.LATITUDE > $latitude - 2 ) AND (locations.LONGITUDE < $longitude + 2) AND (locations.LONGITUDE > $longitude - 2) AND (locations.NAME LIKE '%$place%');";
           $result = $db->query($sql);
           if(!$result){
             //echo "Nothing Found.";
@@ -240,7 +240,7 @@ session_start();
                 foreach ($result as $loc) {
                   echo "<li class=\"list-group-item active\">". $loc["NAME"]. "  Type: [".$loc["TYPE"]."] <button type=\"button\" id = \"".$loc["ID"]."\" class=\"btn btn-secondary btn-sm addLoc\">Add Entry</button></li>";
                 }
-                echo "<\ul>";
+                echo "</ul>";
               }
               ?>
             </div>
