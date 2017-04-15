@@ -82,7 +82,7 @@ session_start();
           $latitude = $row['latitude'];
           $longitude = $row['longitude'];
           //echo "la is $latitude, lo is $longitude";
-          $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.LATITUDE < $latitude + 20) AND (locations.LATITUDE > $latitude - 20 ) AND (locations.LONGITUDE < $longitude +20) AND (locations.LONGITUDE > $longitude -20) AND (locations.NAME LIKE '%$place%');";
+          $sql = "SELECT ID, NAME, TYPE FROM locations WHERE (locations.LATITUDE < $latitude + 3) AND (locations.LATITUDE > $latitude - 3 ) AND (locations.LONGITUDE < $longitude +3) AND (locations.LONGITUDE > $longitude -3) AND (locations.NAME LIKE '%$place%');";
           $result = $db->query($sql);
           if(!$result){
             //echo "Nothing Found.";
