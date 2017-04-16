@@ -33,7 +33,7 @@ session_start();
             return $mysqli->insert_id;
          }
          function checkPlan($db, $pid) { //insert a new plan and return the id
-            if ($result = $db->query("SELECT Plan.Title, locations.NAME, locations.TYPE FROM Plan, contains, locations WHERE Plan.planID = $pid AND contains.planID = $pid AND locations.ID = contains.locationID")) {
+            if ($result = $db->query("SELECT Plan.Title, locations.NAME, locations.TYPE, locations.ID FROM Plan, contains, locations WHERE Plan.planID = $pid AND contains.planID = $pid AND locations.ID = contains.locationID")) {
 //              $currentfield = mysqli_field_tell($result);
 //              printf("Column %d:\n", $currentfield);
 //              printf("Name:     %s\n", $finfo->name);
@@ -119,11 +119,12 @@ session_start();
           return NULL;
         }
          function deleteFromPlan($planid, $locid, $db) { //insert a new plan and return the id
-           if (!$db->query("DELETE FROM contains WHERE planID = ".$planid."and locationID = ".$locid.";")) {
-               echo "DELETE failed: (" . $db->errno . ") " . $db->error;
-               return;
-           }
-           return;
+            $sql = "DELETE FROM contains WHERE planID =".$planid." AND locationID = ".$locid.";";
+            $result = $db->query($sql);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+            }
+            return NULL;
           }
         function changeName($planid, $newname, $db){
           $sql = "UPDATE Plan SET title='$newname' WHERE planID=$planid;";
@@ -168,9 +169,9 @@ session_start();
       <div class = "container">
       </div>
     </div>
-    <div class="col align-self-center">
-      <div class="container">
-        <div class="jumbotron">
+  <div class="col align-self-center" id="real-size">
+    <div class="container">
+      <div class="jumbotron">
         <div class="row" id = "topblank">
           <div class="col-md-12"></div>
         </div>
@@ -202,21 +203,26 @@ session_start();
             <ul id = "planlist" class="list-group">
               <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
               <?php
+                  $the_plan_id = $_GET['planid'];
                   foreach ($res as $loc) {
                     echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]<button type=\"button\" id = \"".$loc['ID']."\" class=\"btn btn-primary btn-sm deleteLoc\">Delete Location</button></li>";
                   }
+
                   if(isset($_POST['addID']) && !empty($_POST['addID'])){
                     $row = getLocById($_POST['addID'], $db);
                     echo "<li class=\"list-group-item\">".$row['NAME']."   Type[".$row['TYPE']."]<button type=\"button\" id = \"".$POST['addID']."\" class=\"btn btn-primary btn-sm deleteLoc\">Delete Location</button></li>";
                     addToPlan($_GET['planid'], $_POST['addID'], $db);
                   }
-                  if (isset($_POST['deleteID'])){
-                    if(!empty($_POST['deleteID'])){
-                      deletePlan($_GET['planid'], $_POST['deleteID'], $db);
-                      // $page = $_SERVER['PHP_SELF'];
-                      // $sec = "1";
-                      // header("Refresh: $sec; url=$page");
-                    }
+
+
+                  if (isset($_POST['deleteID']) && !empty($_POST['deleteID'])){
+                    // if(!empty($_POST['deleteID'])){
+
+                      deleteFromPlan($_GET['planid'], $_POST['deleteID'], $db);
+                      $page = $_SERVER['PHP_SELF'];
+                      $sec = "1";
+                      header("Refresh: $sec; url=$page");
+                    
                   }
               ?>
 
@@ -226,13 +232,13 @@ session_start();
           <div class="col-6">
             <li class="list-group-item">Add more entries to your plan!</li><br>
             <div class = "container">
-              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php">
+              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
                 <input type="text" class="form-control" id="inlineFormInput" placeholder="rename the plan" name = "newname">
                 <button type="submit" id="searchBtn" class="btn btn-primary">Rename</button>
               </form>
             </div>
             <div class = "container">
-              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php">
+              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
                 <label class="sr-only" for="inlineFormInput">Place</label>
                 <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
 
@@ -270,6 +276,22 @@ session_start();
   </div>
 </div>
 
+<div class="container" id="chat-container" style="padding-left: 500px;">
+  <div class="jumbotron col-12" style="padding:20px;">
+    <div id="plain-words" style="margin-bottom:20px">
+        <b>Chat with potential travel mates!</b>
+    </div>
+
+    <div class="container" id="all-messages" style="height:300px;width:95%;background-color:#ffffff">
+        Start here:
+    </div>
+    <form class="form row" style="margin-top:30px;margin-left:15px" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
+      <input type="text" style="width:500px" class="form-control col-10" id="messege_box" placeholder="Instant messeges?" name = "place">
+
+      <button type="submit" id="searchBtn" class="btn btn-primary">Send</button>
+    </form>
+  </div>
+</div>
 
 <script src="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/js/index.js"></script>
 
