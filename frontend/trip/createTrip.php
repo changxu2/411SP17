@@ -118,6 +118,13 @@ session_start();
           }
           return NULL;
         }
+         function deleteFromPlan($planid, $locid, $db) { //insert a new plan and return the id
+           if (!$db->query("DELETE FROM contains WHERE planID = ".$planid."and locationID = ".$locid.";")) {
+               echo "DELETE failed: (" . $db->errno . ") " . $db->error;
+               return;
+           }
+           return;
+          }
         function changeName($planid, $newname, $db){
           $sql = "UPDATE Plan SET title='$newname' WHERE planID=$planid;";
           $result = $db->query($sql);
@@ -196,12 +203,20 @@ session_start();
               <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
               <?php
                   foreach ($res as $loc) {
-                    echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]</li>";
+                    echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]<button type=\"button\" id = \"".$loc['ID']."\" class=\"btn btn-primary btn-sm deleteLoc\">Delete Location</button></li>";
                   }
                   if(isset($_POST['addID']) && !empty($_POST['addID'])){
                     $row = getLocById($_POST['addID'], $db);
-                    echo "<li class=\"list-group-item\">".$row['NAME']."   Type[".$row['TYPE']."]</li>";
+                    echo "<li class=\"list-group-item\">".$row['NAME']."   Type[".$row['TYPE']."]<button type=\"button\" id = \"".$POST['addID']."\" class=\"btn btn-primary btn-sm deleteLoc\">Delete Location</button></li>";
                     addToPlan($_GET['planid'], $_POST['addID'], $db);
+                  }
+                  if (isset($_POST['deleteID'])){
+                    if(!empty($_POST['deleteID'])){
+                      deletePlan($_GET['planid'], $_POST['deleteID'], $db);
+                      // $page = $_SERVER['PHP_SELF'];
+                      // $sec = "1";
+                      // header("Refresh: $sec; url=$page");
+                    }
                   }
               ?>
 
