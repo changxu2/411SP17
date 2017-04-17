@@ -6,9 +6,10 @@ session_start();
 <?php
 if(isset($_SESSION['user_id'])){
   if(!empty($_SESSION['user_id'])){
-    header("Location: user/profile.php?user_id=".$_SESSION['user_id']);
+    echo "<script>window.addEventListener(\"load\", function(event) {window.location.href = \"user/profile.php\";});</script>";
   }
 }
+
  ?>
   <head>
     <!-- Required meta tags -->
