@@ -1,10 +1,10 @@
 
-var height = function(){
-	var offsetHeight = document.getElementById('real-size').offsetHeight - 460;
-	document.getElementById("chat-container").style.marginTop = offsetHeight+"px";
-}
+// var height = function(){
+// 	var offsetHeight = document.getElementById('real-size').offsetHeight - 460;
+// 	document.getElementById("chat-container").style.marginTop = offsetHeight+"px";
+// }
 
-window.addEventListener("load", height);
+// window.addEventListener("load", height);
 
 
 $(".addLoc").on('click', function(){

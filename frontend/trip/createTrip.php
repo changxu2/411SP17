@@ -12,10 +12,13 @@ session_start();
 
     <link rel="stylesheet" href="css/style.css">
 
-    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    
+    
+
+    
 </head>
 <?php
          function connectToDb() {
@@ -148,9 +151,12 @@ session_start();
 <!--Google Font - Work Sans-->
 
 <ul class="nav nav-pills" style="background-color: aliceblue">
-    <a class="navbar-brand" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/">Triphub</a>
+    <?php
+    $page = $_SERVER['PHP_SELF'];
+    ?>
+    <a class="navbar-brand" href="<?php echo $page?>">Triphub</a>
     <li class="nav-item">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="<?php echo $page?>">
         <?php echo $_SESSION['user_name']." Email:[".$_SESSION['user_email']."]";?>
       </a>
     </li>
@@ -274,6 +280,9 @@ session_start();
       </div>
     </div>
   </div>
+  
+
+
 </div>
 
 <div class="container" id="chat-container" style="padding-left: 500px;">
@@ -292,6 +301,26 @@ session_start();
     </form>
   </div>
 </div>
+
+<!--<div class="container" id="chat-container" style="padding-left: 500px;">-->
+<!--  <div class="jumbotron col-12" style="padding:20px;">-->
+<!--    <div id="plain-words" style="margin-bottom:20px">-->
+<!--        <b>Chat with potential travel mates!</b>-->
+<!--    </div>-->
+
+<!--    <div class="container" id="all-messages" style="height:300px;width:95%;background-color:#ffffff">-->
+<!--        Start here:-->
+<!--    </div>-->
+<!--    <form class="form row" style="margin-top:30px;margin-left:15px" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">-->
+<!--      <input type="text" style="width:500px" class="form-control col-10" id="messege_box" placeholder="Instant messeges?" name = "place">-->
+
+<!--      <button type="submit" id="searchBtn" class="btn btn-primary">Send</button>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
 
 <script src="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/js/index.js"></script>
 

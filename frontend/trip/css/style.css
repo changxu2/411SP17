@@ -99,6 +99,14 @@ Modal Ends Here
 .jumbotron {
    background: rgba(200, 54, 54, 0.2);
 }
-#p1{
-  height: 500px;
-}
+/*#p1{*/
+/*  height: 500px;*/
+/*}*/
+
+/*#chat-container { */
+/*    height: 40px; */
+/*    position: absolute; */
+/*    bottom:10px;*/
+/*    right:10px;*/
+/*    width:800px; */
+/*}*/

@@ -92,12 +92,15 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 <body>
 
   <ul class="nav nav-pills" style="background-color: aliceblue">
-      <a class="navbar-brand" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/">Triphub</a>
-      <li class="nav-item">
-        <a class="navbar-brand" href="#">
-          <?php echo $_SESSION['user_name']." Email:[".$_SESSION['user_email']."]";?>
-        </a>
-      </li>
+    <?php
+    $page = $_SERVER['PHP_SELF'];
+    ?>
+    <a class="navbar-brand" href="<?php echo $page?>">Triphub</a>
+    <li class="nav-item">
+      <a class="navbar-brand" href="<?php echo $page?>">
+        <?php echo $_SESSION['user_name']." Email:[".$_SESSION['user_email']."]";?>
+      </a>
+    </li>
       <li class="nav-item">
           <a class="nav-link" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">Profile</a>
       </li>
