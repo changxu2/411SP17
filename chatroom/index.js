@@ -4,6 +4,10 @@ var io = require('socket.io')(http)
 
 var sql = require('mssql')
 
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+
 io.on('connection', function(socket){
   socket.on('room', function(room) {
     socket.join(room);
