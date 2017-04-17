@@ -293,8 +293,8 @@ session_start();
             <p>Chat with potential travel mates!</p>
         </div>
 
-        <div class="col-1" id="minimize">
-            <b onclick="close_chat()">close</b>
+        <div class="col-1">
+            <b id="minimize" onclick="close_chat()">close</b>
         </div>
     </div>
 

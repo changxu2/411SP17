@@ -9,9 +9,11 @@
 function close_chat(){
     var x = document.getElementById('to-close');
     if (x.style.display === 'none') {
+        document.getElementById("minimize").innerHTML = "close";
         x.style.display = 'block';
     } else {
         x.style.display = 'none';
+        document.getElementById("minimize").innerHTML = "open";
     }
 }
 
