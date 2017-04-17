@@ -103,11 +103,11 @@ Modal Ends Here
 /*  height: 500px;*/
 /*}*/
 
-#info { 
-    height: 400px; 
-    position: fixed; 
+#info {
+    height: 400px;
+    position: fixed;
     bottom:10px;
     right:10px;
-    width:800px; 
+    width:800px;
     background-color:#ff0000;
 }

@@ -299,7 +299,7 @@ session_start();
     </div>
 
     <div class="container" id="to-close" style="display:block">
-        <div class="container" id="all-messages" style="height:300px;width:95%;background-color:#ffffff">
+        <div class="container" id="all-messages" style="height:300px;width:95%;background-color:#ffffff;overflow: scroll">
             Start here:
         </div>
         <form class="form row" id = "chat-form" style="margin-top:30px;margin-left:15px;margin-bottom:10px;" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
@@ -310,9 +310,13 @@ session_start();
         <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
         <script>
           $(function () {
+            var username =
+'<?php
+$_SESSION['user_name']
+?>'
             var socket = io(http://tripubproject.web.engr.illinois.edu:3000/)
             $('#chat-form').submit(function(){
-              socket.emit('chat message', {'msg': $('#messege_box').val(), 'room': 123})
+              socket.emit('chat message', {'msg': username+$('#messege_box').val(), 'room': 123})
               $('#messege_box').val('')
               return false
             })
