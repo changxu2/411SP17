@@ -285,20 +285,29 @@ session_start();
 
 </div>
 
-<div class="container" id="chat-container" style="padding-left: 500px;position: fixed; bottom:0px;right:0px;">
-  <div class="jumbotron col-12" style="padding:20px;">
-    <div id="plain-words" style="margin-bottom:20px">
-        <b>Chat with potential travel mates!</b>
+<div class="container col-5" id="chat-container" style="position: fixed;bottom:0px;right:10px;z-index:999">
+  <div class="jumbotron col-11" style="padding:10px; background-color:#bbbbbb;float:right">
+      
+    <div class = "row" style="margin-bottom:10px;margin-left:5px;">
+        <div class="col-9" id="plain-words">
+            <p>Chat with potential travel mates!</p>
+        </div>
+
+        <div class="col-1" id="minimize">
+            <b onclick="close_chat()">close</b>
+        </div>
     </div>
 
-    <div class="container" id="all-messages" style="height:30px;width:95%;background-color:#ffffff">
-        Start here:
+    <div class="container" id="to-close" style="display:block">
+        <div class="container" id="all-messages" style="height:300px;width:95%;background-color:#ffffff">
+            Start here:
+        </div>
+        <form class="form row" style="margin-top:30px;margin-left:15px;margin-bottom:10px;" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
+          <input type="text" class="form-control col-10" id="messege_box" placeholder="Instant messeges?" name = "place">
+    
+          <button type="submit" id="searchBtn" class="btn btn-primary">Send</button>
+        </form>
     </div>
-    <form class="form row" style="margin-top:30px;margin-left:15px" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
-      <input type="text" style="width:500px" class="form-control col-10" id="messege_box" placeholder="Instant messeges?" name = "place">
-
-      <button type="submit" id="searchBtn" class="btn btn-primary">Send</button>
-    </form>
   </div>
 </div>
 
@@ -329,8 +338,6 @@ session_start();
  <!--     </div>-->
  <!-- </div>-->
  <!--</div>      -->
-
-
 
 
 

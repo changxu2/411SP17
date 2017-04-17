@@ -6,6 +6,15 @@
 
 // window.addEventListener("load", height);
 
+function close_chat(){
+    var x = document.getElementById('to-close');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
+
 
 $(".addLoc").on('click', function(){
   $.post(document.URL, { "addID": this.id} , function(result){
