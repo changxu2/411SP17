@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>chatroom</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -23,17 +23,20 @@
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       $(function () {
-        var socket = io();
+        var socket = io()
         $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          return false;
+          socket.emit('chat message', {'msg': $('#m').val(), 'room': 123})
+          $('#m').val('')
+          return false
+        })
+        socket.on('connect', function() {
+           socket.emit('room', 123);
         });
         socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
-          window.scrollTo(0, document.body.scrollHeight);
-        });
-      });
+          $('#messages').append($('<li>').text(msg))
+          window.scrollTo(0, document.body.scrollHeight)
+        })
+      })
     </script>
   </body>
 </html>
