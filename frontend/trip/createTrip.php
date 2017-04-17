@@ -299,8 +299,9 @@ session_start();
     </div>
 
     <div class="container" id="to-close" style="display:block">
-        <div class="container" id="all-messages" style="height:300px;width:95%;background-color:#ffffff;overflow: scroll">
-            Start here:
+        <div class="container" style="height:300px;width:95%;background-color:#ffffff;overflow: scroll">
+          <ul class="list-group" id="all-messages" >
+          </ul>
         </div>
         <form class="form row" id = "chat-form" style="margin-top:30px;margin-left:15px;margin-bottom:10px;" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
           <input type="text" class="form-control col-10" id="messege_box" placeholder="Instant messeges?" name = "place">
@@ -324,7 +325,7 @@ $_SESSION['user_name']
                socket.emit('room', 123);
             });
             socket.on('chat message', function(msg){
-              $('#all-messages').append($('<li>').text(msg))
+              $('#all-messages').append($('<li class="list-group-item">').text(msg))
             })
           })
         </script>
