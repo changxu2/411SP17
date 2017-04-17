@@ -302,7 +302,7 @@ session_start();
         <div class="container" id="all-messages" style="height:300px;width:95%;background-color:#ffffff">
             Start here:
         </div>
-        <form class="form row" style="margin-top:30px;margin-left:15px;margin-bottom:10px;" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
+        <form class="form row" id = "chat-form" style="margin-top:30px;margin-left:15px;margin-bottom:10px;" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
           <input type="text" class="form-control col-10" id="messege_box" placeholder="Instant messeges?" name = "place">
 
           <button type="submit" id="searchBtn" class="btn btn-primary">Send</button>
@@ -310,8 +310,8 @@ session_start();
         <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
         <script>
           $(function () {
-            var socket = io()
-            $('form').submit(function(){
+            var socket = io(http://tripubproject.web.engr.illinois.edu:3000/)
+            $('chat-form').submit(function(){
               socket.emit('chat message', {'msg': $('#messege_box').val(), 'room': 123})
               $('#messege_box').val('')
               return false
