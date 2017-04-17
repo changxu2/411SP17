@@ -4,9 +4,9 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <?php
-if(isset($_GET['user_id'])){
-  if(!empty($_GET['user_id'])){
-    header("Location: profile.php?user_id=".$_GET['user_id']);
+if(isset($_SESSION['user_id'])){
+  if(!empty($_SESSION['user_id'])){
+    header("Location: user/profile.php?user_id=".$_SESSION['user_id']);
   }
 }
  ?>
