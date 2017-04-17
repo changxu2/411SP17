@@ -311,7 +311,7 @@ session_start();
         <script>
           $(function () {
             var socket = io(http://tripubproject.web.engr.illinois.edu:3000/)
-            $('chat-form').submit(function(){
+            $('#chat-form').submit(function(){
               socket.emit('chat message', {'msg': $('#messege_box').val(), 'room': 123})
               $('#messege_box').val('')
               return false
