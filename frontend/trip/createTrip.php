@@ -15,10 +15,10 @@ session_start();
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,700' rel='stylesheet' type='text/css'>
-    
-    
 
-    
+
+
+
 </head>
 <?php
          function connectToDb() {
@@ -228,7 +228,7 @@ session_start();
                       $page = $_SERVER['PHP_SELF'];
                       $sec = "1";
                       header("Refresh: $sec; url=$page");
-                    
+
                   }
               ?>
 
@@ -280,14 +280,14 @@ session_start();
       </div>
     </div>
   </div>
-  
+
 
 
 </div>
 
 <div class="container col-5" id="chat-container" style="position: fixed;bottom:0px;right:10px;z-index:999">
   <div class="jumbotron col-11" style="padding:10px; background-color:#bbbbbb;float:right">
-      
+
     <div class = "row" style="margin-bottom:10px;margin-left:5px;">
         <div class="col-9" id="plain-words">
             <p>Chat with potential travel mates!</p>
@@ -304,9 +304,26 @@ session_start();
         </div>
         <form class="form row" style="margin-top:30px;margin-left:15px;margin-bottom:10px;" id = "chat_message" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
           <input type="text" class="form-control col-10" id="messege_box" placeholder="Instant messeges?" name = "place">
-    
+
           <button type="submit" id="searchBtn" class="btn btn-primary">Send</button>
         </form>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script>
+          $(function () {
+            var socket = io()
+            $('form').submit(function(){
+              socket.emit('chat message', {'msg': $('#messege_box').val(), 'room': 123})
+              $('#messege_box').val('')
+              return false
+            })
+            socket.on('connect', function() {
+               socket.emit('room', 123);
+            });
+            socket.on('chat message', function(msg){
+              $('#all-messages').append($('<li>').text(msg))
+            })
+          })
+        </script>
     </div>
   </div>
 </div>
