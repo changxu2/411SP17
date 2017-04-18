@@ -299,7 +299,7 @@ session_start();
     </div>
 
     <div class="container" id="to-close" style="display:block">
-        <div class="container" style="height:300px;width:95%;background-color:#ffffff;overflow: scroll">
+        <div class="container" id = "chat-out-box" style="height:300px;width:95%;background-color:#ffffff;overflow: scroll">
           <ul class="list-group" id="all-messages" >
           </ul>
         </div>
@@ -313,6 +313,9 @@ session_start();
           $(function () {
             var username =
 '<?php echo $_SESSION['user_name'];?>'
+            if (username == ''){
+              username = 'Anonymous User'
+            }
             var roomname = '<?php echo $the_plan_id;?>'
             var socket = io('http://tripubproject.web.engr.illinois.edu:3000/')
             $('#chat-form').submit(function(){
@@ -327,6 +330,8 @@ session_start();
             });
             socket.on('chat message', function(msg){
               $('#all-messages').append($('<li>').attr('class', 'list-group-item').text(msg))
+              var outbox = document.getElementById("chat-out-box");
+              outbox.scrollTop = outbox.scrollHeight;
               // nmsg.text(msg)
               // nmsg.className += "list-group-item"
             })
