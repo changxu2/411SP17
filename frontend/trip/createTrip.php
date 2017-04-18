@@ -315,7 +315,7 @@ session_start();
 '<?php echo $_SESSION['user_name'];?>'
             var socket = io('http://tripubproject.web.engr.illinois.edu:3000/')
             $('#chat-form').submit(function(){
-              socket.emit('chat message', {'msg': username+$('#messege_box').val(), 'room': 123})
+              socket.emit('chat message', {'msg': username+': '+$('#messege_box').val(), 'room': 123})
               $('#messege_box').val('')
               return false
             })
@@ -323,9 +323,9 @@ session_start();
                socket.emit('room', 123);
             });
             socket.on('chat message', function(msg){
-              var nmsg = $('#all-messages').append($('<li>'))
-              nmsg.text(msg)
-              nmsg.className += "list-group-item"
+              $('#all-messages').append($('<li>').attr('class', 'list-group-item').text(msg))
+              // nmsg.text(msg)
+              // nmsg.className += "list-group-item"
             })
           })
         </script>
