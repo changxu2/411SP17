@@ -313,6 +313,7 @@ session_start();
           $(function () {
             var username =
 '<?php echo $_SESSION['user_name'];?>'
+            var roomname = '<?php echo $the_plan_id;?>'
             var socket = io('http://tripubproject.web.engr.illinois.edu:3000/')
             $('#chat-form').submit(function(){
               if($('#messege_box').val() != ''){
@@ -322,7 +323,7 @@ session_start();
               return false
             })
             socket.on('connect', function() {
-               socket.emit('room', 123);
+               socket.emit('room', roomname);
             });
             socket.on('chat message', function(msg){
               $('#all-messages').append($('<li>').attr('class', 'list-group-item').text(msg))
