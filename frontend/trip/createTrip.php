@@ -325,7 +325,7 @@ $_SESSION['user_name']
                socket.emit('room', 123);
             });
             socket.on('chat message', function(msg){
-              $('#all-messages').append($('<li class="list-group-item">').text(msg))
+              $('#all-messages').append($('<li>').text(msg))
             })
           })
         </script>
