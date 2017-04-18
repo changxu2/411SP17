@@ -315,8 +315,10 @@ session_start();
 '<?php echo $_SESSION['user_name'];?>'
             var socket = io('http://tripubproject.web.engr.illinois.edu:3000/')
             $('#chat-form').submit(function(){
-              socket.emit('chat message', {'msg': username+': '+$('#messege_box').val(), 'room': 123})
-              $('#messege_box').val('')
+              if($('#messege_box').val() != ''){
+                socket.emit('chat message', {'msg': username+': '+$('#messege_box').val(), 'room': 123})
+                $('#messege_box').val('')
+              }
               return false
             })
             socket.on('connect', function() {
