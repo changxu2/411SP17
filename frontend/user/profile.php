@@ -300,17 +300,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         </div>
 
       </div>
-<!--         <div class = "container">
-          <ul class = "list-group" id = "star_planner">
-            <li class = "list-group-item active">Star Planner</li>
-            <?php
-              // $row = selectTopUsers();
-              // foreach ($row as $ele) {
-              //   echo "<li class =\"list-group-item\">".$ele['user_name']."</li>";
-              }
-            ?>
-          </ul>
-        </div> -->
     </div>
 
   </div>
