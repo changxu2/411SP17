@@ -37,6 +37,58 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
     return $myArray;
   }
+
+  // planID1 is the planID of the user itself
+  function updateRating($planID1,$planID2){
+
+    $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = '$planID1';";
+    $sql_beat = "SELECT createdByUserId FROM Plan WHERE planID = '$planID2';";
+    $user_me = $db->query($sql_me);
+    $user_beat = $db->query($sql_beat);
+    $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = '$user_me';";
+    $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = '$user_beat';";
+    $user_rating1 = $db->query($sql_rating1);
+    $user_rating2 = $db->query($sql_rating2);
+
+    $sql1 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID1';";
+    $sql2 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID2';"; 
+    $count1 = $db->query($sql1);
+    $count2 = $db->query($sql2);
+
+    // The comparision between the number of messages in the chatroom in the table is to be added
+    $actualScore1 = ($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0);
+    $actualScore2 = 1 - (($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0));
+
+    $ExpectationMe = 1 / (1 + (pow(10, ($user_rating2 - $user_rating1) / 400)));
+    $ExpectationBeat = 1 / (1 + (pow(10, ($user_rating1 - $user_rating2) / 400)));
+
+    if ($actualScore1 != $ExpectationMe) {
+      $newRatingMe = $sql_rating1 + 16 * ($actualScore1 - $ExpectationMe);
+      $sql3 = "UPDATE users SET user_rating = '$newRatingMe' WHERE user_id = '$user_me';";
+      $db->query($sql3);
+    }
+
+    if ($actualScore2 != $ExpectationBeat) {
+      $newRatingBeat = $sql_rating2 + 16 * ($actualScore2 - $ExpectationBeat);
+      $sql4 = "UPDATE users SET user_rating = '$newRatingBeat' WHERE user_id = '$user_beat';";
+      $db->query($sql4);
+    }
+
+    return $actualScore1 == 1? 1: (($actualScore1 == 0.5)? 0.5 : 0);
+  }
+
+  function selectTopUsers(){
+    $sql = "SELECT user_name FROM users WHERE user_rating IN (SELECT TOP 3 user_rating FROM users ORDER BY 
+    user_rating DESC);";
+    $result = $db->query($sql);
+    $topUserArray = array();
+    while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+      $topUserArray[] = $row;
+    }
+    return $topUserArray;
+  }
+  //
+
   $userId = $_SESSION['user_id'];
   $userName = $_SESSION['user_name'];
   $userEmail = $_SESSION['user_email'];
@@ -77,6 +129,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       $count2 ++;
     }
   }
+
 ?>
 <head>
   <meta charset="UTF-8">
@@ -92,15 +145,12 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 <body>
 
   <ul class="nav nav-pills" style="background-color: aliceblue">
-    <?php
-    $page = $_SERVER['PHP_SELF'];
-    ?>
-    <a class="navbar-brand" href="<?php echo $page?>">Triphub</a>
-    <li class="nav-item">
-      <a class="navbar-brand" href="<?php echo $page?>">
-        <?php echo $_SESSION['user_name']." Email:[".$_SESSION['user_email']."]";?>
-      </a>
-    </li>
+      <a class="navbar-brand" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/">Triphub</a>
+      <li class="nav-item">
+        <a class="navbar-brand" href="#">
+          <?php echo $_SESSION['user_name']." Email:[".$_SESSION['user_email']."]";?>
+        </a>
+      </li>
       <li class="nav-item">
           <a class="nav-link" href="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">Profile</a>
       </li>
@@ -113,16 +163,15 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   </ul>
   <div class="container" id = "mainW">
     <div class="row">
-      <div class="col-6">
-      	<div class="jumbotron">
-        <ul class="list-group">
-          <a href="#" class="list-group-item active">
-            Plans you owned
-          </a>
-          <?php
-          for ($i = 0; $i < $count; $i++) {
-            //find the name of the plan with the ids array
-            $to_find = $ids[$i];
+    <div class="col-6">
+      <form id="combatForm" method="post" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/combat.php">
+        
+          
+          <select class="form-control" id="SelectMyPlan" name="myPlanID">
+          <option>Select My Pokemonplan!</option>
+            <?php
+              for ($i = 0; $i < $count; $i++) {
+                $to_find = $ids[$i];
 
             $sql = "SELECT title FROM Plan WHERE planID = $to_find;";
             $result_query = $db->query($sql) or die($db->error);
@@ -130,43 +179,14 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<li class=\"list-group-item\">".$result_row->title."<button type=\"button\" id = \"".$to_find."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
-      <button type=\"button\" id = \"".$to_find."d\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
-          }
-          if (isset($_POST['addTrip'])){
-            if(!empty($_POST['addTrip'])){
-              $newPlanId = createPlan($userId, $userId, $db);
-              echo ("<li class=\"list-group-item\">New Plan<button type=\"button\" id = \"".$newPlanId."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
-        <button type=\"button\" id = \"".$newPlanId."d\" class=\"btn btn-primary btn-sm deletePlan\">Delete Plan</button></li>");
-              $page = $_SERVER['PHP_SELF'];
-              $sec = "1";
-              header("Refresh: $sec; url=$page");
-            }
-          }
-          if (isset($_POST['deletePlan'])){
-            if(!empty($_POST['deletePlan'])){
-              deletePlan($_POST['deletePlan'], $db);
-              $page = $_SERVER['PHP_SELF'];
-              $sec = "1";
-              header("Refresh: $sec; url=$page");
-            }
-          }
-          if (isset($_POST['friend'])){
-            if(!empty($_POST['friend'])){
-              addFriend($userId, $_POST['friend'], $db);
-              $page = $_SERVER['PHP_SELF'];
-              $sec = "1";
-              header("Refresh: $sec; url=$page");
-            }
-          }
-          ?>
-        </ul>
-        <ul class="list-group" id = "friend_plan_list">
-          <a href="#" class="list-group-item active">
-            Plans From Your Followed Users
-          </a>
-          <?php
-          for ($i = 0; $i < $count2; $i++) {
+            echo ("<option id = \"".$to_find."\" >".$result_row->title."</option>");
+              }
+            ?>
+          </select>
+          <select class="form-control" id="SelectOtherPlan" name="otherPlanID">
+          <option>Select Pokemonplan From Your Friends!</option>
+            <?php
+              for ($i = 0; $i < $count2; $i++) {
             //find the name of the plan with the ids array
             $to_find2 = $ids2[$i];
 
@@ -176,33 +196,25 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<li class=\"list-group-item\">".$result_row->title."<button type=\"button\" id = \"".$to_find2."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
-      </li>");
+            echo ("<option id = \"".$to_find2."\">".$result_row->title."</option>");
           }
           ?>
-        </ul>
-        </div>
-      </div>
-      <div class="col-6">
-        <form  id="followUser" method="post" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/profile.php">
-          <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" name="friend" placeholder="Follow by Username">
-          <button type = "button" class="btn btn-primary" id="add_trip"> Add Trip Plans </button>
-          <button type = "submit" class="btn btn-primary"> Follow This User </button>
-        </form>
-
-        <div class = "container">
-          <ul class="list-group" id = "friend_plan_list">
-            <li class="list-group-item active">You are following</li>
-            <?php
-              $row = getFriend($userId, $db);
-              foreach ($row as $ele){
-                echo "<li class=\"list-group-item\">".$ele['user_name']."</li>";
+          </select>
+        <button type="submit" class="btn btn-primary startCombat">Start Combat!</button>
+      </form>
+      <?php
+        if (isset($_POST['myPlanID'])){
+            if(!empty($_POST['myPlanID'])){
+              $result = updateRating($_POST['myPlanID'],$_POST['otherPlanID']);
+              if ($result == 1) {
+              	echo("<p> You Win !</p>");
+              } else if ($result == 0) {
+              	echo("<p> It is a draw !</p>");
+              } else {
+              	echo("<p> You Lost !</p>");
               }
-            ?>
-          </ul>
-        </div>
-
-      </div>
+          }
+      ?>
     </div>
   </div>
   <script src="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/js/profile.js"></script>
