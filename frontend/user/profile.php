@@ -50,7 +50,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     $user_rating2 = $db->query($sql_rating2);
 
     $sql1 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID1';";
-    $sql2 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID2';"; 
+    $sql2 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID2';";
     $count1 = $db->query($sql1);
     $count2 = $db->query($sql2);
 
@@ -77,7 +77,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   }
 
   function selectTopUsers(){
-    $sql = "SELECT user_name FROM users WHERE user_rating IN (SELECT TOP 3 user_rating FROM users ORDER BY 
+    $sql = "SELECT user_name FROM users WHERE user_rating IN (SELECT TOP 3 user_rating FROM users ORDER BY
     user_rating DESC);";
     $result = $db->query($sql);
     $topUserArray = array();
@@ -236,7 +236,7 @@ setInterval("flush_webPage()", 30000);
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<li class=\"list-group-item\">".$result_row->title."<button type=\"button\" id = \"".$to_find2."\" class=\"btn btn-secondary btn-sm editPlan\">Edit Plan</button>
+            echo ("<li class=\"list-group-item\">".$result_row->title."<button type=\"button\" id = \"".$to_find2."\" class=\"btn btn-secondary btn-sm editPlan\">View Plan</button>
       </li>");
           }
           ?>
