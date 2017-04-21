@@ -214,6 +214,8 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               	echo("<p> You Lost !</p>");
               }
           }
+        }
+      }
       ?>
     </div>
   </div>
