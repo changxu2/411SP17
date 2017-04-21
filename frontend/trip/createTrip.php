@@ -35,7 +35,7 @@ session_start();
             }
             return $mysqli->insert_id;
          }
-         function checkPlan($db, $pid) { //insert a new plan and return the id
+         function checkPlan($db, $pid) {
             if ($result = $db->query("SELECT Plan.Title, locations.NAME, locations.TYPE, locations.ID FROM Plan, contains, locations WHERE Plan.planID = $pid AND contains.planID = $pid AND locations.ID = contains.locationID")) {
 //              $currentfield = mysqli_field_tell($result);
 //              printf("Column %d:\n", $currentfield);
@@ -54,6 +54,21 @@ session_start();
             echo "SELECT failed: (" . $mysqli->errno . ") " . $mysqli->error;
             return NULL;
          }
+
+         function getOwner($db, $pid){
+           if ($result = $db->query("SELECT ownedByUserID FROM Plan WHERE planID = $pid")) {
+//              $currentfield = mysqli_field_tell($result);
+//              printf("Column %d:\n", $currentfield);
+//              printf("Name:     %s\n", $finfo->name);
+//              printf("Table:    %s\n", $finfo->table);
+//              $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+//              return $row;
+             //$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+             return $result;
+           }
+           retun NULL;
+         }
+
          function getTitle($db, $pid) {
           if ($result = $db->query("SELECT title FROM Plan WHERE Plan.planID = $pid")) {
               $result_fetch = $result->fetch_object();
@@ -187,6 +202,10 @@ session_start();
             <?php
 
             $db = connectToDb();
+            $the_user = $_SESSION['user_id'];
+            $ownID = getOwner($db, $_GET['planid']);
+
+            $cmpOwner = ($ownID == $the_user);
 
             if(isset($_GET['planid']) && !empty($_GET['planid'])){
               $_SESSION['currentPlan'] = $_GET['planid'];
@@ -210,8 +229,10 @@ session_start();
               <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
               <?php
                   $the_plan_id = $_GET['planid'];
-                  foreach ($res as $loc) {
-                    echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]<button type=\"button\" id = \"".$loc['ID']."\" class=\"btn btn-primary btn-sm deleteLoc\">Delete Location</button></li>";
+                  if($cmpOwner){
+                    foreach ($res as $loc) {
+                      echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]<button type=\"button\" id = \"".$loc['ID']."\" class=\"btn btn-primary btn-sm deleteLoc\">Delete Location</button></li>";
+                    }
                   }
 
                   if(isset($_POST['addID']) && !empty($_POST['addID'])){
@@ -236,40 +257,51 @@ session_start();
           </div>
 
           <div class="col-6">
-            <li class="list-group-item">Add more entries to your plan!</li><br>
-            <div class = "container">
-              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
-                <input type="text" class="form-control" id="inlineFormInput" placeholder="rename the plan" name = "newname">
-                <button type="submit" id="searchBtn" class="btn btn-primary">Rename</button>
-              </form>
-            </div>
-            <div class = "container">
-              <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
-                <label class="sr-only" for="inlineFormInput">Place</label>
-                <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
-
-                <label class="sr-only" for="inlineFormInputGroup">Zipcode</label>
-                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                  <div class="input-group-addon">@</div>
-                  <input type="number" class="form-control" id="inlineFormInputGroup" placeholder="zipcode" name = "zipcode">
-                </div>
-
-                <button type="submit" id="searchBtn" class="btn btn-primary">Search</button>
-              </form>
-            </div>
-            <div class = "container">
-              <?php
-              if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
-                echo "<ul class=\"list-group\">";
-                $place = $_POST['place'];
-                $zipcode = $_POST['zipcode'];
-                $result = getPlaces($db, $zipcode, $place);
-                foreach ($result as $loc) {
-                  echo "<li class=\"list-group-item active\">". $loc["NAME"]. "  Type: [".$loc["TYPE"]."] <button type=\"button\" id = \"".$loc["ID"]."\" class=\"btn btn-secondary btn-sm addLoc\">Add Entry</button></li>";
-                }
-                echo "</ul>";
+            <script>
+            $(window).load(function(){
+              var ownID = "<?php echo $ownID; ?>"
+              var the_user = "<?php echo $the_user; ?>"
+              if(ownID != the_user){
+                document.getElementById("toHide").style.display = 'none';
               }
-              ?>
+            })
+            </script>
+            <div id = "toHide">
+              <li class="list-group-item">Add more entries to your plan!</li><br>
+              <div class = "container">
+                <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
+                  <input type="text" class="form-control" id="inlineFormInput" placeholder="rename the plan" name = "newname">
+                  <button type="submit" id="searchBtn" class="btn btn-primary">Rename</button>
+                </form>
+              </div>
+              <div class = "container">
+                <form class="form" id = "searchForm" method="POST" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/trip/createTrip.php?<?php echo "planid=$the_plan_id"?>">
+                  <label class="sr-only" for="inlineFormInput">Place</label>
+                  <input type="text" class="form-control" id="inlineFormInput" placeholder="Things you want to explore" name = "place">
+
+                  <label class="sr-only" for="inlineFormInputGroup">Zipcode</label>
+                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <div class="input-group-addon">@</div>
+                    <input type="number" class="form-control" id="inlineFormInputGroup" placeholder="zipcode" name = "zipcode">
+                  </div>
+
+                  <button type="submit" id="searchBtn" class="btn btn-primary">Search</button>
+                </form>
+              </div>
+              <div class = "container">
+                <?php
+                if(isset($_POST['place']) && !empty($_POST['place']) && isset($_POST['zipcode']) && !empty($_POST['zipcode'])){
+                  echo "<ul class=\"list-group\">";
+                  $place = $_POST['place'];
+                  $zipcode = $_POST['zipcode'];
+                  $result = getPlaces($db, $zipcode, $place);
+                  foreach ($result as $loc) {
+                    echo "<li class=\"list-group-item active\">". $loc["NAME"]. "  Type: [".$loc["TYPE"]."] <button type=\"button\" id = \"".$loc["ID"]."\" class=\"btn btn-secondary btn-sm addLoc\">Add Entry</button></li>";
+                  }
+                  echo "</ul>";
+                }
+                ?>
+              </div>
             </div>
           </div>
         </div>
