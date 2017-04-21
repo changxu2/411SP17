@@ -12,3 +12,7 @@ Website aiming to help people design their own trip plan, share their travel his
 A <a href = "https://wiki.illinois.edu/wiki/display/cs411sp17/Team+NaN">project</a> under CS 411 @ University of Illinois.		
 
 Front end <a href = "http://codepen.io/colorlib/full/ZQxjPe/">template</a> cloned from CodePen.
+
+## Configuration
+
+Put frontend folder under your server root path. In chatroom directory, use `npm install`, then `npm start` to start chat server.

@@ -98,6 +98,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       if($ret == FALSE){
         echo "<script> alert(\"UPDATE SELF RATING FAILED\")</script>";
       }
+
     }
 
     if ($actualScore2 != $ExpectationBeat) {
