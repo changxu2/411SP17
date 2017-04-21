@@ -205,7 +205,7 @@ session_start();
             $the_user = $_SESSION['user_id'];
             $ownID = getOwner($db, $_GET['planid']);
 
-            $cmpOwner = ($ownID == $the_user);
+            $cmpOwner = strcmp($ownID, $the_user);
 
             if(isset($_GET['planid']) && !empty($_GET['planid'])){
               $_SESSION['currentPlan'] = $_GET['planid'];
