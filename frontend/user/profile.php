@@ -37,6 +37,92 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
     return $myArray;
   }
+
+  function updateRating($planID1,$planID2){
+
+    $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = '$planID1';";
+    $sql_beat = "SELECT createdByUserId FROM Plan WHERE planID = '$planID2';";
+    $user_me = $db->query($sql_me);
+
+    if($user_me == FALSE){
+      echo "<script> alert(\"SELECT SELF ID FAILED\")</script>";
+    }
+
+    $user_beat = $db->query($sql_beat);
+
+    if($user_beat == FALSE){
+      echo "<script> alert(\"SELECT OPPONENT ID FAILED\")</script>";
+    }
+
+    $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = '$user_me';";
+    $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = '$user_beat';";
+
+    $user_rating1 = $db->query($sql_rating1);
+
+    if($user_rating1 == FALSE){
+      echo "<script> alert(\"SELECT SELF RATING FAILED\")</script>";
+    }
+
+    $user_rating2 = $db->query($sql_rating2);
+
+    if($user_rating2 == FALSE){
+      echo "<script> alert(\"SELECT OPPONENT RATING FAILED\")</script>";
+    }
+
+    $sql1 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID1';";
+    $sql2 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID2';"; 
+
+    $count1 = $db->query($sql1);
+
+    if($count1 == FALSE){
+      echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED\")</script>";
+    }
+
+    $count2 = $db->query($sql2);
+
+    if($count1 == FALSE){
+      echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED\")</script>";
+    }
+
+    // The comparision between the number of messages in the chatroom in the table is to be added
+    $actualScore1 = ($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0);
+    $actualScore2 = 1 - (($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0));
+
+    $ExpectationMe = 1 / (1 + (pow(10, ($user_rating2 - $user_rating1) / 400)));
+    $ExpectationBeat = 1 / (1 + (pow(10, ($user_rating1 - $user_rating2) / 400)));
+
+    if ($actualScore1 != $ExpectationMe) {
+      $newRatingMe = $sql_rating1 + 16 * ($actualScore1 - $ExpectationMe);
+      $sql3 = "UPDATE users SET user_rating = '$newRatingMe' WHERE user_id = '$user_me';";
+      $ret = $db->query($sql3);
+      if($ret == FALSE){
+        echo "<script> alert(\"UPDATE SELF RATING FAILED\")</script>";
+      }
+    }
+
+    if ($actualScore2 != $ExpectationBeat) {
+      $newRatingBeat = $sql_rating2 + 16 * ($actualScore2 - $ExpectationBeat);
+      $sql4 = "UPDATE users SET user_rating = '$newRatingBeat' WHERE user_id = '$user_beat';";
+      $ret = $db->query($sql4);
+      if($ret == FALSE){
+        echo "<script> alert(\"UPDATE OPPONENT RATING FAILED\")</script>";
+      }
+    }
+
+    return $actualScore1 == 1? 1: (($actualScore1 == 0.5)? 0.5 : 0);
+  }
+
+  function selectTopUsers(){
+    $sql = "SELECT user_name FROM users WHERE user_rating IN (SELECT TOP 3 user_rating FROM users ORDER BY 
+    user_rating DESC);";
+    $result = $db->query($sql);
+    $topUserArray = array();
+    while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+      $topUserArray[] = $row;
+    }
+    return $topUserArray;
+  }
+
   $userId = $_SESSION['user_id'];
   $userName = $_SESSION['user_name'];
   $userEmail = $_SESSION['user_email'];
@@ -61,7 +147,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
   }
 
-
   $sql2 = "SELECT Plan.planID FROM Plan INNER JOIN Friend ON (Plan.ownedByUserID = Friend.userID2 AND Friend.userID1 = ".$userId.");"; //Advanced Query 2
   $result2 = $db->query($sql2) or die($db->error);
   if (!$result2) {
@@ -77,6 +162,17 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       $count2 ++;
     }
   }
+
+  function flush_webPage(){
+  $.ajax({
+    url: 'profile.php',
+    success: function(data){
+    $('.result').html(data);
+  }
+});
+}
+
+setInterval("flush_webPage()", 30000);
 ?>
 <head>
   <meta charset="UTF-8">
@@ -203,7 +299,19 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
         </div>
 
       </div>
+        <div class = "container">
+          <ul class = "list-group" id = "star_planner">
+            <li class = "list-group-item active">Star Planner</li>
+            <?php
+              $row = selectTopUsers();
+              foreach ($row as $ele) {
+                echo "<li class =\"list-group-item\">".$ele['user_name']."</li>";
+              }
+            ?>
+          </ul>
+        </div>
     </div>
+
   </div>
   <script src="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/js/profile.js"></script>
 </body>
