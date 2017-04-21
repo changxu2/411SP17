@@ -164,16 +164,16 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
   }
 
-  function flush_webPage(){
-  $.ajax({
-    url: 'profile.php',
-    success: function(data){
-    $('.result').html(data);
-  }
-});
-}
+//   function flush_webPage(){
+//   $.ajax({
+//     url: 'profile.php',
+//     success: function(data){
+//     $('.result').html(data);
+//   }
+// });
+// }
 
-setInterval("flush_webPage()", 30000);
+// setInterval("flush_webPage()", 30000);
 ?>
 <head>
   <meta charset="UTF-8">
@@ -300,17 +300,17 @@ setInterval("flush_webPage()", 30000);
         </div>
 
       </div>
-        <div class = "container">
+<!--         <div class = "container">
           <ul class = "list-group" id = "star_planner">
             <li class = "list-group-item active">Star Planner</li>
             <?php
-              $row = selectTopUsers();
-              foreach ($row as $ele) {
-                echo "<li class =\"list-group-item\">".$ele['user_name']."</li>";
+              // $row = selectTopUsers();
+              // foreach ($row as $ele) {
+              //   echo "<li class =\"list-group-item\">".$ele['user_name']."</li>";
               }
             ?>
           </ul>
-        </div>
+        </div> -->
     </div>
 
   </div>
