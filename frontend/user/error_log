@@ -246,3 +246,49 @@
 [17-Apr-2017 01:02:57 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 145
 [17-Apr-2017 01:02:58 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 145
 [17-Apr-2017 04:12:03 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 140
+[18-Apr-2017 01:42:25 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 140
+[18-Apr-2017 02:07:22 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 140
+[18-Apr-2017 02:07:45 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 148
+[18-Apr-2017 02:11:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 156
+[18-Apr-2017 02:11:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 156
+[18-Apr-2017 02:51:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 156
+[18-Apr-2017 02:51:10 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/tripubproject/public_html/411SP17/frontend/user/profile.php:6) in /home/tripubproject/public_html/411SP17/frontend/user/profile.php on line 156
+[21-Apr-2017 02:40:24 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 223
+[21-Apr-2017 02:40:34 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 223
+[21-Apr-2017 02:45:41 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:45:49 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:49:30 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:49:35 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:49:50 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:50:15 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:50:16 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:52:16 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:52:18 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:52:56 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:55:41 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:56:06 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:56:26 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:56:29 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:56:31 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 02:57:18 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:00:43 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:01:11 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:02:01 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:04:39 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:04:50 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:07:41 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:07:54 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:08:16 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:27:13 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:27:22 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:29:34 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:29:40 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:29:41 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:29:41 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:29:42 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:29:43 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:29:47 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:43:41 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:43:44 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:44:32 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
+[21-Apr-2017 03:44:51 UTC] PHP Fatal error:  Call to a member function query() on null in /home/tripubproject/public_html/411SP17/frontend/user/combat.php on line 46
