@@ -40,8 +40,8 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
   function updateRating($planID1,$planID2){
 
-    $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = '$planID1';";
-    $sql_beat = "SELECT createdByUserId FROM Plan WHERE planID = '$planID2';";
+    $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = $planID1;";
+    $sql_beat = "SELECT createdByUserID FROM Plan WHERE planID = $planID2;";
     $user_me = $db->query($sql_me);
 
     if($user_me == FALSE){
@@ -54,8 +54,8 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       echo "<script> alert(\"SELECT OPPONENT ID FAILED\")</script>";
     }
 
-    $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = '$user_me';";
-    $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = '$user_beat';";
+    $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = $user_me;";
+    $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = $user_beat;";
 
     $user_rating1 = $db->query($sql_rating1);
 
@@ -80,7 +80,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
     $count2 = $db->query($sql2);
 
-    if($count1 == FALSE){
+    if($count2 == FALSE){
       echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED\")</script>";
     }
 
