@@ -170,6 +170,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
           <select class="form-control" id="SelectMyPlan" name="myPlanID">
           <option>Select My Pokemonplan!</option>
             <?php
+            $myplan = array();
               for ($i = 0; $i < $count; $i++) {
                 $to_find = $ids[$i];
 
@@ -180,7 +181,9 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
             }
             $result_row = $result_query->fetch_object();
             echo ("<option id = \"".$to_find."\" >".$result_row->title."</option>");
+            $myplan[$result_row->title] = $to_find;
               }
+              var_dump($myplan);
             ?>
           </select>
           <select class="form-control" id="SelectOtherPlan" name="otherPlanID">
@@ -196,7 +199,8 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<option id = \"".$to_find2."\">".$result_row->title."</option>");
+            echo ("<option name = \"".$to_find2."\">".$result_row->title."</option>");
+            
           }
           ?>
           </select>
@@ -205,17 +209,19 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       <?php
         if (isset($_POST['myPlanID'])){
             if(!empty($_POST['myPlanID'])){
+                echo($_POST['myPlanID']);
+                echo($_POST['otherPlanID']);
               $result = updateRating($_POST['myPlanID'],$_POST['otherPlanID']);
+              echo($result);
               if ($result == 1) {
               	echo("<p> You Win !</p>");
               } else if ($result == 0) {
-              	echo("<p> It is a draw !</p>");
-              } else {
               	echo("<p> You Lost !</p>");
+              } else {
+              	echo("<p> It is a draw !</p>");
               }
           }
         }
-      }
       ?>
     </div>
   </div>
