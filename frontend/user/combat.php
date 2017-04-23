@@ -86,7 +86,7 @@ function updateRating($planID1,$planID2, $db){
 
     
     if($count1 == FALSE){
-      echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED1\")</script>";
+      $count1 = 0;
     }
     
     $sql2 = "SELECT COUNT(locationID) as haha FROM contains WHERE planID = $planID2 GROUP BY planID;";

@@ -39,8 +39,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   }
   
     function selectTopUsers($db){
-    $sql = "SELECT user_name FROM users WHERE user_rating IN (SELECT user_rating FROM users ORDER BY
-    user_rating DESC) LIMIT 0,10;";
+    $sql = "SELECT user_name FROM users ORDER BY user_rating DESC LIMIT 0,10;";
     $result = $db->query($sql);
     $topUserArray = array();
     while ($row = $result->fetch_array(MYSQL_ASSOC)) {
@@ -106,20 +105,20 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
     $result_1 = $db->query($sql1);
     $row_1 = $result_1->fetch_assoc();
-    $count_1 = $row_1['haha'];
+    $count1 = $row_1['haha'];
     // echo "count1: ".$count_1;
     
-    if($count_1 == FALSE){
-      echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED\")</script>";
+    if($count1 == FALSE){
+      $count1 = 0;
     }
 
     $result_2 = $db->query($sql2);
     $row_2 = $result_2->fetch_assoc();
-    $count_2 = $row_2['hehe'];
+    $count2 = $row_2['hehe'];
     // echo "count2: ".$count_2;
 
-    if($count_2 == FALSE){
-      echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED\")</script>";
+    if($count2 == FALSE){
+      $count2 = 0;
     }
 
     // The comparision between the number of messages in the chatroom in the table is to be added
