@@ -55,19 +55,16 @@ session_start();
             return NULL;
          }
 
-         function getOwner($db, $pid){
-           if ($result = $db->query("SELECT ownedByUserID FROM Plan WHERE planID = $pid")) {
-//              $currentfield = mysqli_field_tell($result);
-//              printf("Column %d:\n", $currentfield);
-//              printf("Name:     %s\n", $finfo->name);
-//              printf("Table:    %s\n", $finfo->table);
-//              $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-//              return $row;
-             //$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-             return $result;
-           }
-           retun NULL;
-         }
+        function getOwner($db, $pid){
+            //echo "<script> alert($pid); </script>";
+            if ($result = $db->query("SELECT ownedByUserID FROM Plan WHERE planID = $pid;")) {
+                $row = $result->fetch_array(MYSQLI_NUM);
+                $r = $row[0];
+                //echo "<script> alert($r); </script>";
+                return $r;
+            }
+            return NULL;
+        }
 
          function getTitle($db, $pid) {
           if ($result = $db->query("SELECT title FROM Plan WHERE Plan.planID = $pid")) {
@@ -203,21 +200,22 @@ session_start();
 
             $db = connectToDb();
             $the_user = $_SESSION['user_id'];
-            $ownID = getOwner($db, $_GET['planid']);
+            $ownID = "";
 
-            $cmpOwner = ($ownID == $the_user);
+            //$cmpOwner = ($ownID == $the_user);
 
             if(isset($_GET['planid']) && !empty($_GET['planid'])){
               $_SESSION['currentPlan'] = $_GET['planid'];
               //echo "Got planid: ", $_SESSION['currentPlan'], "<br>";
               $res = checkPlan($db, $_GET['planid']);
               $haha = getTitle($db, $_GET['planid']);
-
+              $ownID = getOwner($db, $_GET['planid']);
             }
             else{
               $_GET['planid'] = $_SESSION['currentPlan'];
               $res = checkPlan($db, $_GET['planid']);
               $haha = getTitle($db, $_GET['planid']);
+              $ownID = getOwner($db, $_GET['planid']);
             }
             if(isset($_POST['newname']) && !empty($_POST['newname'])){
               $haha = $_POST['newname'];
@@ -229,9 +227,15 @@ session_start();
               <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
               <?php
                   $the_plan_id = $_GET['planid'];
-                  if($cmpOwner){
+                  //echo "<script> alert('$ownID vs $the_user'); </script>";
+                  if(strcmp($ownID,$the_user) == 0){
                     foreach ($res as $loc) {
                       echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]<button type=\"button\" id = \"".$loc['ID']."\" class=\"btn btn-primary btn-sm deleteLoc\">Delete Location</button></li>";
+                    }
+                  }
+                  else {
+                    foreach ($res as $loc) {
+                      echo "<li class=\"list-group-item\">".$loc['NAME']."   Type[".$loc['TYPE']."]</li>";
                     }
                   }
 
@@ -258,11 +262,11 @@ session_start();
 
           <div class="col-6">
             <script>
-            $(window).load(function(){
+            $(document).ready(function() {
               var ownID = "<?php echo $ownID; ?>"
               var the_user = "<?php echo $the_user; ?>"
               if(ownID != the_user){
-                document.getElementById("toHide").style.display = 'none';
+                document.getElementById("toHide").style.display = 'none'
               }
             })
             </script>
@@ -302,6 +306,23 @@ session_start();
                 }
                 ?>
               </div>
+            </div>
+            <div id = "toShow">
+                <?php 
+                    
+                if(strcmp($ownID,$the_user) != 0){
+                    
+                    if ($result = $db->query("SELECT user_name, user_email, user_rating FROM users WHERE user_id = $ownID;")) {
+                        $row = $result->fetch_array(MYSQLI_ASSOC);
+                        $temp_name = $row['user_name'];
+                        $temp_email = $row['user_email'];
+                        $temp_rating = $row['user_rating'];
+                        echo "This plan was created by $temp_name [$temp_email]. $temp_name's rating in Plan Combats is $temp_rating.";
+                    }
+        
+                }
+                
+                ?>
             </div>
           </div>
         </div>

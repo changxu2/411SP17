@@ -39,21 +39,66 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   }
 
   // planID1 is the planID of the user itself
-  function updateRating($planID1,$planID2){
+function updateRating($planID1,$planID2, $db){
+    // echo "im IN function and planID1 is".$planID1." and planID2 is ".$planID2."!!!";
+    $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = $planID1;";
+    $sql_beat = "SELECT createdByUserID FROM Plan WHERE planID = $planID2;";
 
-    $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = '$planID1';";
-    $sql_beat = "SELECT createdByUserId FROM Plan WHERE planID = '$planID2';";
-    $user_me = $db->query($sql_me);
-    $user_beat = $db->query($sql_beat);
+    $result_me = $db->query($sql_me);
+    $user_me = $result_me->fetch_object()->createdByUserID;
+
+
+    if($user_me == FALSE){
+      echo "<script> alert(\"SELECT SELF ID FAILED\")</script>";
+    }
+
+    $result_beat = $db->query($sql_beat);
+    $user_beat = $result_beat->fetch_object()->createdByUserID;
+
+
+    if($user_beat == FALSE){
+      echo "<script> alert(\"SELECT OPPONENT ID FAILED\")</script>";
+    }
+
     $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = '$user_me';";
     $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = '$user_beat';";
-    $user_rating1 = $db->query($sql_rating1);
-    $user_rating2 = $db->query($sql_rating2);
 
-    $sql1 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID1';";
-    $sql2 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID2';"; 
-    $count1 = $db->query($sql1);
-    $count2 = $db->query($sql2);
+    $result_rating1 = $db->query($sql_rating1);
+    $user_rating1 = $result_rating1->fetch_object()->user_rating;
+
+    if($user_rating1 == FALSE){
+      echo "<script> alert(\"SELECT SELF RATING FAILED\")</script>";
+    }
+    
+    $result_rating2 = $db->query($sql_rating2);
+    $user_rating2 = $result_rating2->fetch_object()->user_rating;
+
+    if($user_rating2 == FALSE){
+      echo "<script> alert(\"SELECT OPPONENT RATING FAILED\")</script>";
+    }
+
+    $sql1 = "SELECT COUNT(locationID) as haha FROM contains WHERE planID = $planID1 GROUP BY planID;";
+
+
+    $result_1 = $db->query($sql1);
+    $row_1 = $result_1->fetch_assoc();
+    $count1 = $row_1['haha'];
+
+    
+    if($count1 == FALSE){
+      echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED1\")</script>";
+    }
+    
+    $sql2 = "SELECT COUNT(locationID) as haha FROM contains WHERE planID = $planID2 GROUP BY planID;";
+    $result_2 = $db->query($sql2);
+    $row_2 = $result_2->fetch_assoc();
+    $count2 = $row_2['haha'];
+
+    
+    if($count2 == FALSE){
+      $count2 = 0;
+    }
+
 
     // The comparision between the number of messages in the chatroom in the table is to be added
     $actualScore1 = ($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0);
@@ -63,18 +108,27 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     $ExpectationBeat = 1 / (1 + (pow(10, ($user_rating1 - $user_rating2) / 400)));
 
     if ($actualScore1 != $ExpectationMe) {
-      $newRatingMe = $sql_rating1 + 16 * ($actualScore1 - $ExpectationMe);
+      $newRatingMe = $user_rating1 + 16 * ($actualScore1 - $ExpectationMe);
       $sql3 = "UPDATE users SET user_rating = '$newRatingMe' WHERE user_id = '$user_me';";
-      $db->query($sql3);
+      $ret = $db->query($sql3);
+      if($ret == FALSE){
+        echo "<script> alert(\"UPDATE SELF RATING FAILED\")</script>";
+      }
+
     }
 
     if ($actualScore2 != $ExpectationBeat) {
-      $newRatingBeat = $sql_rating2 + 16 * ($actualScore2 - $ExpectationBeat);
+      $newRatingBeat = $user_rating2 + 16 * ($actualScore2 - $ExpectationBeat);
       $sql4 = "UPDATE users SET user_rating = '$newRatingBeat' WHERE user_id = '$user_beat';";
-      $db->query($sql4);
+      $ret = $db->query($sql4);
+      if($ret == FALSE){
+        echo "<script> alert(\"UPDATE OPPONENT RATING FAILED\")</script>";
+      }
     }
 
-    return $actualScore1 == 1? 1: (($actualScore1 == 0.5)? 0.5 : 0);
+    $actualScore1 == 1? 1: (($actualScore1 == 0.5)? 0.5 : 0);
+
+    return $actualScore1;
   }
 
   function selectTopUsers(){
@@ -165,12 +219,13 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     <div class="row">
     <div class="col-6">
       <form id="combatForm" method="post" action="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/combat.php">
-        
-          
+        <input type="hidden" name="myId" />
+          <div id="notification-event">
+              
           <select class="form-control" id="SelectMyPlan" name="myPlanID">
+            
           <option>Select My Pokemonplan!</option>
             <?php
-            $myplan = array();
               for ($i = 0; $i < $count; $i++) {
                 $to_find = $ids[$i];
 
@@ -180,12 +235,13 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<option id = \"".$to_find."\" >".$result_row->title."</option>");
-            $myplan[$result_row->title] = $to_find;
+            echo ("<option value = \"".$to_find."\" >".$result_row->title."</option>");
               }
-              var_dump($myplan);
+            
             ?>
           </select>
+          
+          </div>
           <select class="form-control" id="SelectOtherPlan" name="otherPlanID">
           <option>Select Pokemonplan From Your Friends!</option>
             <?php
@@ -199,7 +255,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               printf("Errormessage: %s\n", $db->error);
             }
             $result_row = $result_query->fetch_object();
-            echo ("<option name = \"".$to_find2."\">".$result_row->title."</option>");
+            echo ("<option value = \"".$to_find2."\">".$result_row->title."</option>");
             
           }
           ?>
@@ -209,10 +265,32 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       <?php
         if (isset($_POST['myPlanID'])){
             if(!empty($_POST['myPlanID'])){
-                echo($_POST['myPlanID']);
-                echo($_POST['otherPlanID']);
-              $result = updateRating($_POST['myPlanID'],$_POST['otherPlanID']);
-              echo($result);
+                // echo "myPlanID: ";
+                // echo($_POST['myPlanID']);
+                // echo "yourPlanID: ";
+                // echo($_POST['otherPlanID']);
+                $myid = $_POST['myPlanID'];
+            
+            $sql = "SELECT title FROM Plan WHERE planID = $myid;";
+            $result_query = $db->query($sql) or die($db->error);
+            if (!$result_query) {
+              printf("Errormessage: %s\n", $db->error);
+            }
+            $result_row = $result_query->fetch_object();
+            // echo("<span>$result_row->title V.S </span>");
+            $otherid = $_POST['otherPlanID'];
+            $sql = "SELECT title FROM Plan WHERE planID = $otherid;";
+            $result_query = $db->query($sql) or die($db->error);
+            if (!$result_query) {
+              printf("Errormessage: %s\n", $db->error);
+            }
+            $result_row = $result_query->fetch_object();
+            // echo("<span>$result_row->title</span>");
+            
+            // echo "Im here and otherid is ".$otherid."!!!!";
+              $result = updateRating($myid,$otherid,$db);
+            //   echo("after");
+            //   echo($result);
               if ($result == 1) {
               	echo("<p> You Win !</p>");
               } else if ($result == 0) {

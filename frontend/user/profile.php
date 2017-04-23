@@ -37,50 +37,88 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
     return $myArray;
   }
+  
+    function selectTopUsers($db){
+    $sql = "SELECT user_name FROM users WHERE user_rating IN (SELECT user_rating FROM users ORDER BY
+    user_rating DESC) LIMIT 0,10;";
+    $result = $db->query($sql);
+    $topUserArray = array();
+    while ($row = $result->fetch_array(MYSQL_ASSOC)) {
+      $topUserArray[] = $row;
+      
+    //   ['user_name']
+    }
+    return $topUserArray;
+  }
+  
+  function yourRanking($uid, $db){
+    $sql1 = "SELECT user_rating FROM users WHERE user_id = $uid;";
+    $result1 = $db->query($sql1);
+    $result_row1 = $result1->fetch_object();  
+    $rating = $result_row1->user_rating;
+    $sql2 = "SELECT COUNT(user_rating) as heihei FROM users WHERE user_rating > $rating;";
+    $result2 = $db->query($sql2);
+    $result_row2 = $result2->fetch_object();  
+    $ranking = $result_row2->heihei + 1;
+    return $ranking;
+  }
 
-  function updateRating($planID1,$planID2){
+  function updateRating($planID1,$planID2, $db){
 
     $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = $planID1;";
     $sql_beat = "SELECT createdByUserID FROM Plan WHERE planID = $planID2;";
-    $user_me = $db->query($sql_me);
+
+    $result_me = $db->query($sql_me);
+    $user_me = $result_me->fetch_object()->createdByUserID;
+
 
     if($user_me == FALSE){
       echo "<script> alert(\"SELECT SELF ID FAILED\")</script>";
     }
 
-    $user_beat = $db->query($sql_beat);
+    $result_beat = $db->query($sql_beat);
+    $user_beat = $result_beat->fetch_object()->createdByUserID;
+
 
     if($user_beat == FALSE){
       echo "<script> alert(\"SELECT OPPONENT ID FAILED\")</script>";
     }
 
-    $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = $user_me;";
-    $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = $user_beat;";
+    $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = '$user_me';";
+    $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = '$user_beat';";
 
-    $user_rating1 = $db->query($sql_rating1);
+    $result_rating1 = $db->query($sql_rating1);
+    $user_rating1 = $result_rating1->fetch_object()->user_rating;
 
     if($user_rating1 == FALSE){
       echo "<script> alert(\"SELECT SELF RATING FAILED\")</script>";
     }
-
-    $user_rating2 = $db->query($sql_rating2);
+    
+    $result_rating2 = $db->query($sql_rating2);
+    $user_rating2 = $result_rating2->fetch_object()->user_rating;
 
     if($user_rating2 == FALSE){
       echo "<script> alert(\"SELECT OPPONENT RATING FAILED\")</script>";
     }
 
-    $sql1 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID1';";
-    $sql2 = "SELECT COUNT(locationID) FROM contains WHERE planID = '$planID2';";
+    $sql1 = "SELECT COUNT(locationID) as haha FROM contains WHERE planID = $planID1 GROUP BY planID;";
+    $sql2 = "SELECT COUNT(locationID) as hehe FROM contains WHERE planID = $planID2 GROUP BY planID;";
 
-    $count1 = $db->query($sql1);
-
-    if($count1 == FALSE){
+    $result_1 = $db->query($sql1);
+    $row_1 = $result_1->fetch_assoc();
+    $count_1 = $row_1['haha'];
+    // echo "count1: ".$count_1;
+    
+    if($count_1 == FALSE){
       echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED\")</script>";
     }
 
-    $count2 = $db->query($sql2);
+    $result_2 = $db->query($sql2);
+    $row_2 = $result_2->fetch_assoc();
+    $count_2 = $row_2['hehe'];
+    // echo "count2: ".$count_2;
 
-    if($count2 == FALSE){
+    if($count_2 == FALSE){
       echo "<script> alert(\"SELECT SELF LOCATION NUMBER FAILED\")</script>";
     }
 
@@ -92,7 +130,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     $ExpectationBeat = 1 / (1 + (pow(10, ($user_rating1 - $user_rating2) / 400)));
 
     if ($actualScore1 != $ExpectationMe) {
-      $newRatingMe = $sql_rating1 + 16 * ($actualScore1 - $ExpectationMe);
+      $newRatingMe = $user_rating1 + 16 * ($actualScore1 - $ExpectationMe);
       $sql3 = "UPDATE users SET user_rating = '$newRatingMe' WHERE user_id = '$user_me';";
       $ret = $db->query($sql3);
       if($ret == FALSE){
@@ -102,7 +140,7 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
     }
 
     if ($actualScore2 != $ExpectationBeat) {
-      $newRatingBeat = $sql_rating2 + 16 * ($actualScore2 - $ExpectationBeat);
+      $newRatingBeat = $user_rating2 + 16 * ($actualScore2 - $ExpectationBeat);
       $sql4 = "UPDATE users SET user_rating = '$newRatingBeat' WHERE user_id = '$user_beat';";
       $ret = $db->query($sql4);
       if($ret == FALSE){
@@ -110,18 +148,9 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
       }
     }
 
-    return $actualScore1 == 1? 1: (($actualScore1 == 0.5)? 0.5 : 0);
-  }
+    $actualScore1 == 1? 1: (($actualScore1 == 0.5)? 0.5 : 0);
 
-  function selectTopUsers(){
-    $sql = "SELECT user_name FROM users WHERE user_rating IN (SELECT TOP 3 user_rating FROM users ORDER BY
-    user_rating DESC);";
-    $result = $db->query($sql);
-    $topUserArray = array();
-    while ($row = $result->fetch_array(MYSQL_ASSOC)) {
-      $topUserArray[] = $row;
-    }
-    return $topUserArray;
+    return $actualScore1;
   }
 
   $userId = $_SESSION['user_id'];
@@ -297,21 +326,34 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
               }
             ?>
           </ul>
-        </div>
 
-      </div>
-<!--         <div class = "container">
-          <ul class = "list-group" id = "star_planner">
-            <li class = "list-group-item active">Star Planner</li>
+        </div>
+        <div class = "container">
+           <ul class = "list-group" id = "your_ranking">
+              <li class = "list-group-item active">Your ranking is: 
             <?php
-              // $row = selectTopUsers();
-              // foreach ($row as $ele) {
-              //   echo "<li class =\"list-group-item\">".$ele['user_name']."</li>";
+              $ranking = yourRanking($userId, $db);
+              echo $ranking;
+            ?>
+            </li>
+          </ul>
+        </div>  
+        <div class = "container">
+           <ul class = "list-group" id = "star_planner">
+              <li class = "list-group-item active">Star Planner</li>
+            <?php
+              $row = selectTopUsers($db);
+              foreach ($row as $ele) {
+                echo "<li class =\"list-group-item\">".$ele['user_name']."</li>";
               }
             ?>
           </ul>
-        </div> -->
+        </div>  
+
+      </div>
+      
     </div>
+
 
   </div>
   <script src="http://tripubproject.web.engr.illinois.edu/411SP17/frontend/user/js/profile.js"></script>
