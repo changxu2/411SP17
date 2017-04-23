@@ -327,7 +327,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
             ?>
           </ul>
 
-<<<<<<< HEAD
         </div>
         <div class = "container">
            <ul class = "list-group" id = "your_ranking">
@@ -353,9 +352,6 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
 
       </div>
       
-=======
-      </div>
->>>>>>> 52cb47d825fa025cc877793ef5bb19dcd679035a
     </div>
 
 
