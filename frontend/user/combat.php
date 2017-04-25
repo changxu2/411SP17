@@ -39,8 +39,9 @@ function createPlan($crr_user, $pre_user, $db) { //insert a new plan and return 
   }
 
   // planID1 is the planID of the user itself
-function updateRating($planID1,$planID2, $db){
-    // echo "im IN function and planID1 is".$planID1." and planID2 is ".$planID2."!!!";
+ function updateRating($planID1,$planID2, $db){
+    
+    echo "<ul>";
     $sql_me = "SELECT createdByUserID FROM Plan WHERE planID = $planID1;";
     $sql_beat = "SELECT createdByUserID FROM Plan WHERE planID = $planID2;";
 
@@ -59,7 +60,7 @@ function updateRating($planID1,$planID2, $db){
     if($user_beat == FALSE){
       echo "<script> alert(\"SELECT OPPONENT ID FAILED\")</script>";
     }
-
+    
     $sql_rating1 = "SELECT user_rating FROM users WHERE user_id = '$user_me';";
     $sql_rating2 = "SELECT user_rating FROM users WHERE user_id = '$user_beat';";
 
@@ -76,33 +77,66 @@ function updateRating($planID1,$planID2, $db){
     if($user_rating2 == FALSE){
       echo "<script> alert(\"SELECT OPPONENT RATING FAILED\")</script>";
     }
-
+    
+    echo "<li>Your current rating is ".$user_rating1." ";
+    echo " VS ";
+    echo "Your opponent's current rating is ".$user_rating2.". </li>";
+      
     $sql1 = "SELECT COUNT(locationID) as haha FROM contains WHERE planID = $planID1 GROUP BY planID;";
-
+    $sql2 = "SELECT COUNT(locationID) as hehe FROM contains WHERE planID = $planID2 GROUP BY planID;";
 
     $result_1 = $db->query($sql1);
     $row_1 = $result_1->fetch_assoc();
     $count1 = $row_1['haha'];
-
+    // echo "count1: ".$count_1;
     
     if($count1 == FALSE){
       $count1 = 0;
     }
-    
-    $sql2 = "SELECT COUNT(locationID) as haha FROM contains WHERE planID = $planID2 GROUP BY planID;";
+
     $result_2 = $db->query($sql2);
     $row_2 = $result_2->fetch_assoc();
-    $count2 = $row_2['haha'];
+    $count2 = $row_2['hehe'];
+    // echo "count2: ".$count_2;
 
-    
     if($count2 == FALSE){
       $count2 = 0;
     }
-
-
+    
+    echo "<li>The number of locations in your plan is ".$count1." ";
+    echo " VS ";
+    echo "The number of locations in your opponent's plan is ".$count2.". </li>";
+    
+    $actualScoreLocation_Me =  ($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0);
+    $actualScoreLocation_Beat = 1 - (($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0));
+    
+    
+    $sql_me_likings = "SELECT SUM(likes) as me FROM likings WHERE planID = $planID1 GROUP BY planID;";
+    $sql_beat_likings = "SELECT SUM(likes) as beat FROM likings WHERE planID = $planID2 GROUP BY planID;";
+    
+    $res_me_likings = $db->query($sql_me_likings);
+    $user_me_likings = $res_me_likings->fetch_object()->me;
+    $res_beat_likings = $db->query($sql_beat_likings);
+    $user_beat_likings = $res_beat_likings->fetch_object()->beat;
+    if ($user_me_likings == NULL){
+        $user_me_likings = 0;
+    }
+    if ($user_beat_likings == NULL){
+        $user_beat_likings = 0;
+    }
+    $actualScoreLiking_Me = ($user_me_likings > $user_beat_likings) ? 1 : (($user_me_likings < $user_beat_likings) ? 0 : 0.5);
+    $actualScoreLiking_Beat = 1 - $actualScoreLiking_Me;
+    
+    echo "<li>The number of likes your plan get is ".$user_me_likings." ";
+    echo " VS ";
+    echo "The number of likes your opponent's plan get is ".$user_beat_likings.". </li>";
+    
+    $totalScore_Me = 0.5 * $actualScoreLiking_Me + 0.5 * $actualScoreLocation_Me;
+    $totalScore_Beat = 0.5 * $actualScoreLiking_Beat + 0.5 * $actualScoreLocation_Beat;
+    
     // The comparision between the number of messages in the chatroom in the table is to be added
-    $actualScore1 = ($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0);
-    $actualScore2 = 1 - (($count1 > $count2) ? 1 : (($count1 == $count2) ? 0.5 : 0));
+    $actualScore1 = ($totalScore_Me > $totalScore_Beat) ? 1 : (($totalScore_Me == $totalScore_Beat) ? 0.5 : 0);
+    $actualScore2 = 1 - ($totalScore_Me > $totalScore_Beat) ? 1 : (($totalScore_Me == $totalScore_Beat) ? 0.5 : 0);
 
     $ExpectationMe = 1 / (1 + (pow(10, ($user_rating2 - $user_rating1) / 400)));
     $ExpectationBeat = 1 / (1 + (pow(10, ($user_rating1 - $user_rating2) / 400)));
@@ -126,6 +160,7 @@ function updateRating($planID1,$planID2, $db){
       }
     }
 
+    echo "</ul>";
     $actualScore1 == 1? 1: (($actualScore1 == 0.5)? 0.5 : 0);
 
     return $actualScore1;
@@ -294,7 +329,7 @@ function updateRating($planID1,$planID2, $db){
               if ($result == 1) {
               	echo("<p> You Win !</p>");
               } else if ($result == 0) {
-              	echo("<p> You Lost !</p>");
+              	echo("<p> Oooops.....You Lost !</p>");
               } else {
               	echo("<p> It is a draw !</p>");
               }

@@ -149,6 +149,45 @@ session_start();
           }
           return NULL;
         }
+        
+        function checkLike($planid, $userid, $db){
+            $sql = "SELECT likes FROM likings WHERE planID=$planid AND userID=$userid;";
+            $result = $db->query($sql);
+            $row = $result->fetch_assoc();
+            $the_like = $row['likes'];
+
+            if($the_like == NULL or $the_like == 0){
+              return 0;
+            }
+            else{
+                return 1;
+            }
+
+        }
+        function changeLike($planid, $userid, $db){
+            $sql = "SELECT likes FROM likings WHERE planID=$planid AND userID=$userid;";
+            $result = $db->query($sql);
+            $row = $result->fetch_assoc();
+            $the_like = $row['likes']; 
+            
+            $sql2 = "";
+            if($the_like == NULL){
+              $sql2 = "INSERT INTO likings(planID,userID,likes) VALUES($planid,$userid,1);";
+            }
+            else if($the_like == 0){
+                $sql2 = "UPDATE likings SET likes=1 WHERE planID=$planid AND userID=$userid;";
+            }
+            else{
+                $sql2 = "UPDATE likings SET likes=0 WHERE planID=$planid AND userID=$userid;";
+            }
+            
+            $result2 = $db->query($sql2);
+            if (!$result) {
+                printf("Errormessage: %s\n", $db->error);
+            }
+            return NULL;
+        }
+        
 //$userId = $_GET['user_id'];
 //    $userName = $_SESSION['user_name'];
 //    $userEmail = $_SESSION['user_email'];
@@ -221,12 +260,17 @@ session_start();
               $haha = $_POST['newname'];
               changeName($_GET['planid'], $_POST['newname'], $db);
             }
+            if(isset($_POST['likes']) && !empty($_POST['likes'])) {
+                $planidd = $_POST['likes'];
+                $user = $_POST['userid'];
+                changeLike($planidd, $user, $db);
+            }
             // check if result is fine, if yes do something..
             ?>
             <ul id = "planlist" class="list-group">
-              <li class="list-group-item active"><?php echo "Plan: ".$haha ?></li>
-              <?php
+              <li class="list-group-item active"><?php echo "Plan: ".$haha ?><?php $plan = $_GET['planid'];$result = checkLike($plan, $the_user, $db);if ($result == 0) {echo "<button data-id=\"".$the_user."\" name=\"like\"type=\"button\" id = \"".$_SESSION['currentPlan']."\" class=\"btn btn-primary btn-sm like\" style=\"background-color:red\">Like</button>";} else {echo "<button data-id=\"".$the_user."\" name=\"like\"type=\"button\" id = \"".$_SESSION['currentPlan']."\" class=\"btn btn-primary btn-sm like\" style=\"background-color:black\">Dislike</button>";}
                   $the_plan_id = $_GET['planid'];
+                  
                   //echo "<script> alert('$ownID vs $the_user'); </script>";
                   if(strcmp($ownID,$the_user) == 0){
                     foreach ($res as $loc) {
@@ -347,11 +391,11 @@ session_start();
         </div>
 
         <div class="col-1">
-            <b id="minimize" onclick="close_chat()">close</b>
+            <b id="minimize" onclick="close_chat()">open</b>
         </div>
     </div>
 
-    <div class="container" id="to-close" style="display:block">
+    <div class="container" id="to-close" style="display:none">
         <div class="container" id = "chat-out-box" style="height:300px;width:95%;background-color:#ffffff;overflow: scroll">
           <ul class="list-group" id="all-messages" >
           </ul>

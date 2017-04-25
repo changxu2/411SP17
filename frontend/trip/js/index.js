@@ -30,3 +30,10 @@ $(".deleteLoc").on('click', function(){
   });
 });
 
+$("button[name='like']").on('click', function(){
+    var id = this.getAttribute('data-id');
+    $.post(document.URL, { "likes": this.id, "userid": id} , function(result){
+      setTimeout(window.location.reload(), 4000)
+  });
+    // avoid to execute the actual submit of the form.
+});

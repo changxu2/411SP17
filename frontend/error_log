@@ -46,8 +46,44 @@
 [23-Apr-2017 02:30:06 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
 [23-Apr-2017 02:30:46 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
 [23-Apr-2017 02:38:15 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
-[23-Apr-2017 03:23:18 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
-[23-Apr-2017 03:25:20 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
-[23-Apr-2017 03:30:29 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
-[23-Apr-2017 03:30:40 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
-[23-Apr-2017 03:34:24 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
+[23-Apr-2017 03:43:10 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
+[23-Apr-2017 03:56:40 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
+[23-Apr-2017 03:56:58 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
+[23-Apr-2017 03:57:26 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
+[23-Apr-2017 04:24:20 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library '/opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so' - /opt/cpanel/ea-php56/root/usr/lib64/php/modules/imagick.so: cannot open shared object file: No such file or directory in Unknown on line 0
+[23-Apr-2017 20:59:52 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[23-Apr-2017 22:12:29 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[23-Apr-2017 22:12:31 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[23-Apr-2017 22:12:31 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[23-Apr-2017 22:13:37 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[23-Apr-2017 23:12:05 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[23-Apr-2017 23:44:20 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 01:39:49 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 02:37:55 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 02:56:47 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 03:12:03 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 03:12:04 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 04:57:46 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 23:01:35 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 23:11:53 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 23:27:29 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 23:30:52 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 23:34:13 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 23:36:31 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[24-Apr-2017 23:40:14 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 01:13:25 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 01:13:49 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 02:09:22 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 04:25:30 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 04:30:19 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:10:22 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:19:28 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:27:40 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:28:41 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:28:59 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:32:09 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:37:28 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:38:20 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:43:20 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 05:44:47 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
+[25-Apr-2017 06:15:41 UTC] PHP Warning:  Module 'imagick' already loaded in Unknown on line 0
