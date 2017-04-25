@@ -11,7 +11,7 @@ Website aiming to help people design their own trip plan, share their travel his
 ## Project Site		
 A <a href = "https://wiki.illinois.edu/wiki/display/cs411sp17/Team+NaN">project</a> under CS 411 @ University of Illinois.		
 
-Front end <a href = "http://codepen.io/colorlib/full/ZQxjPe/">template</a> cloned from CodePen.
+Final report is at <a href = "https://wiki.illinois.edu/wiki/display/cs411sp17/Tripub%3A+Final+Report">here</a>.
 
 ## Configuration
 
