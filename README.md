@@ -16,3 +16,6 @@ Final report is at <a href = "https://wiki.illinois.edu/wiki/display/cs411sp17/T
 ## Configuration
 
 Put frontend folder under your server root path. In chatroom directory, use `npm install`, then `npm start` to start chat server.
+
+## SQL
+A sample sql file is put in `/localhost.sql`.
